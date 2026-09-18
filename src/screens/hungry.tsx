@@ -9,51 +9,37 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { BabyBottle } from "./babyIcons";
+import { BabyBottle } from "../components/babyIcons";
+import { BackButton } from "../components/backButton";
+import { Nav } from "../components/nav";
 
-export default function App() {
+export default function Hungry() {
   return (
-    <SafeAreaView style={styles.SafeArea}>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color="#454545" />
-        </TouchableOpacity>
-
-        <View style={styles.header}>
-          <Text style={styles.title}>Seu bebê está chorando</Text>
-          <Text style={styles.subtitle}>Choro detectado às</Text>
-        </View>
-        <View style={styles.circle}>
-          <BabyBottle size={120} color="#E7BC0F" />
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.message}>70% de chance de ser:</Text>
-          <Text style={styles.result}>Fome</Text>
-        </View>
-
-        <View style={styles.nav}>
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="time-outline" size={26} color="#696969" />
-            <Text style={styles.navText}>Histórico</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="settings-outline" size={26} color="#696969" />
-            <Text style={styles.navText}>Configurações</Text>
-          </TouchableOpacity>
-        </View>
+    <View style={styles.container}>
+      <BackButton onPress={() => console.log("Voltar")} />
+      <View style={styles.header}>
+        <Text style={styles.title}>Seu bebê está chorando</Text>
+        <Text style={styles.subtitle}>Choro detectado às</Text>
       </View>
-    </SafeAreaView>
+      <View style={styles.circle}>
+        <BabyBottle size={120} color="#E7BC0F" />
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.message}>70% de chance de ser:</Text>
+        <Text style={styles.result}>Fome</Text>
+      </View>
+      <Nav 
+        onPressHistory={() => console.log("Ir para Histórico")}
+        onPressSettings={() => console.log("Ir para Configurações")}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  SafeArea: {
-    flex: 1,
-    backgroundColor: "#FDE76D",
-  },
   container: {
     flex: 1,
+    backgroundColor: "#FDE76D",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,
@@ -103,49 +89,5 @@ const styles = StyleSheet.create({
     color: "#454545",
     fontWeight: "700",
     marginTop: 6,
-  },
-  backButton: {
-    alignSelf: "flex-start",
-    backgroundColor: "#F6F6F6",
-    width: 47,
-    height: 42,
-    borderRadius: 21,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 20,
-    marginTop: 10,
-  },
-
-  nav: {
-    width: "45%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#F6F6F6",
-    borderRadius: 25,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    alignSelf: "flex-end",
-    marginRight: 20,
-    marginBottom: 20,
-    elevation: 6,
-
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  navItem: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  navText: {
-    fontSize: 12,
-    color: "#696969",
-    marginTop: 4,
-    fontWeight: "700",
-  },
+  }
 });

@@ -7,54 +7,41 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { Discomfort } from "./babyIcons";
+import { DiscomfortIcon } from "../components/babyIcons";
+import { BackButton } from "../components/backButton";
+import { Nav } from "../components/nav";
 
-export default function App() {
+export default function Discomfort() {
   return (
-    <SafeAreaView style={styles.SafeArea}>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color="#454545" />
-        </TouchableOpacity>
-
-        <View style={styles.header}>
-          <Text style={styles.title}>Seu bebê está chorando</Text>
-          <Text style={styles.subtitle}>Choro detectado às</Text>
-        </View>
-        <View style={styles.circle}>
-          <Discomfort size={120} color="#ca420c" />
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.message}>70% de chance de ser:</Text>
-          <Text style={styles.result}>Desconforto</Text>
-        </View>
-        <TouchableOpacity style={styles.infoButton}>
-          <Ionicons name="help-outline" size={35} color="#2D2D2D" />
-          <Text style={styles.infoButtonText}>ajuda</Text>
-        </TouchableOpacity>
-        <View style={styles.nav}>
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="time-outline" size={26} color="#696969" />
-            <Text style={styles.navText}>Histórico</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="settings-outline" size={26} color="#696969" />
-            <Text style={styles.navText}>Configurações</Text>
-          </TouchableOpacity>
-        </View>
+    <View style={styles.container}>
+      <BackButton onPress={() => console.log("Voltar")} />
+      <View style={styles.header}>
+        <Text style={styles.title}>Seu bebê está chorando</Text>
+        <Text style={styles.subtitle}>Choro detectado às</Text>
       </View>
-    </SafeAreaView>
+      <View style={styles.circle}>
+        <DiscomfortIcon size={120} color="#ca420c" />
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.message}>70% de chance de ser:</Text>
+        <Text style={styles.result}>Desconforto</Text>
+      </View>
+      <TouchableOpacity style={styles.infoButton}>
+        <Ionicons name="help-outline" size={35} color="#454545" />
+        <Text style={styles.infoButtonText}>ajuda</Text>
+      </TouchableOpacity>
+      <Nav
+        onPressHistory={() => console.log("Ir para Histórico")}
+        onPressSettings={() => console.log("Ir para Configurações")}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  SafeArea: {
-    flex: 1,
-    backgroundColor: "#EA8E3D",
-  },
   container: {
     flex: 1,
+    backgroundColor: "#EA8E3D",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,
@@ -105,17 +92,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginTop: 6,
   },
-  backButton: {
-    alignSelf: "flex-start",
-    backgroundColor: "#F6F6F6",
-    width: 47,
-    height: 42,
-    borderRadius: 21,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 20,
-    marginTop: 10,
-  },
   infoButton: {
     backgroundColor: "#f7f9fa",
     width: "20%",
@@ -124,59 +100,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: -20,
-    
+
     elevation: 6,
 
-    
-    shadowColor: '#000000',
+    shadowColor: "#000000",
     shadowOffset: {
       width: 0,
       height: 3,
     },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    
 
     borderWidth: 3.3,
-    borderColor: "#2D2D2D",
+    borderColor: "#454545",
   },
-  infoButtonText:{
+  infoButtonText: {
     fontSize: 16,
-    color: "#2D2D2D",
+    color: "#454545",
     marginTop: -5,
-    fontWeight: "500"
-  },
-
-  nav: {
-    width: "45%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#F6F6F6",
-    borderRadius: 25,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    alignSelf: "flex-end",
-    marginRight: 20,
-    marginBottom: 20,
-    elevation: 6,
-
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  navItem: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  navText: {
-    fontSize: 12,
-    color: "#696969",
-    marginTop: 4,
-    fontWeight: "700",
+    fontWeight: "500",
   },
 });

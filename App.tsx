@@ -1,5 +1,5 @@
-import Login from './src/screens/login';
+import Discomfort from './src/screens/discomfort';
 
 export default function App() {
-  return <Login />;
+  return <Discomfort/>;
 }

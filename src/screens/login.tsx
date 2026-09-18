@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import BabyIcon from "./babyIcons";
+import BabyIcon from "../components/babyIcons";
 export default function App() {
   return (
     <SafeAreaView style={styles.SafeArea}>

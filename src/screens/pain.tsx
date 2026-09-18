@@ -7,54 +7,41 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { Pain } from "./babyIcons";
+import { PainIcon } from "../components/babyIcons";
+import { BackButton } from "../components/backButton";
+import { Nav } from "../components/nav";
 
-export default function App() {
+export default function Pain() {
   return (
-    <SafeAreaView style={styles.SafeArea}>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color="#454545" />
-        </TouchableOpacity>
-
-        <View style={styles.header}>
-            <Text style={styles.title}>Seu bebê está chorando</Text>
-            <Text style={styles.subtitle}>Choro detectado às</Text>
-        </View>
-        <View style={styles.circle}>
-            <Pain size={120} color="#8E0305" />
-        </View>
-        <View style={styles.card}>
-            <Text style={styles.message}>70% de chance de ser:</Text>
-            <Text style={styles.result}>Dor</Text>
-        </View>
-        <View style={styles.nav}>
-            <TouchableOpacity style={styles.navItem}>
-                <Ionicons name="time-outline" size={26} color="#696969" />
-                <Text style={styles.navText}>Histórico</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.navItem}>
-                <Ionicons name="settings-outline" size={26} color="#696969" />
-                <Text style={styles.navText}>Configurações</Text>
-            </TouchableOpacity>
-        </View>
+    <View style={styles.container}>
+      <BackButton onPress={() => console.log("Voltar")} />
+      <View style={styles.header}>
+        <Text style={styles.title}>Seu bebê está chorando</Text>
+        <Text style={styles.subtitle}>Choro detectado às</Text>
       </View>
-    </SafeAreaView>
+      <View style={styles.circle}>
+        <PainIcon size={145} color="#8E0305" />
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.message}>70% de chance de ser:</Text>
+        <Text style={styles.result}>Dor</Text>
+      </View>
+      <Nav 
+        onPressHistory={() => console.log("Ir para Histórico")}
+        onPressSettings={() => console.log("Ir para Configurações")}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  SafeArea: {
-    flex: 1,
-    backgroundColor: "#E35B5B",
-  },
   container: {
     flex: 1,
+    backgroundColor: "#E35B5B",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,
-    paddingBottom: 30, 
+    paddingBottom: 30,
   },
   header: {
     alignItems: "center",
@@ -68,7 +55,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     color: "#454545",
-    fontWeight: "500"
+    fontWeight: "500",
   },
   circle: {
     width: 200,
@@ -76,63 +63,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     borderRadius: 100,
 
-    borderWidth: 5,           
-    borderColor: '#8E0305',
+    borderWidth: 5,
+    borderColor: "#8E0305",
     alignItems: "center",
     justifyContent: "center",
   },
-  card:{
+  card: {
     width: "80%",
-    paddingHorizontal: 20,     
+    paddingHorizontal: 20,
     paddingVertical: 20,
     backgroundColor: "#F6F6F6",
     borderRadius: 24,
-    alignItems: "center",     
-    justifyContent: "center", 
+    alignItems: "center",
+    justifyContent: "center",
   },
-  message:{
+  message: {
     fontSize: 18,
     color: "#454545",
     fontWeight: "400",
   },
-  result:{
+  result: {
     fontSize: 26,
     color: "#454545",
     fontWeight: "700",
     marginTop: 6,
   },
-  backButton:{
-    alignSelf: "flex-start", 
-    backgroundColor: "#F6F6F6",
-    width: 47,
-    height: 42,
-    borderRadius: 21,       
-    alignItems: "center",     
-    justifyContent: "center",
-    marginLeft: 20,          
-    marginTop: 10,          
-  },
-  nav:{
-   width: "45%",                  
-   flexDirection: "row",           
-   justifyContent: "space-around", 
-   alignItems: "center",
-   backgroundColor: "#F6F6F6",
-   borderRadius: 20,              
-   paddingVertical: 12,
-   paddingHorizontal: 25,
-   alignSelf: "flex-end",
-   marginRight: 20,       // Afasta 20px da borda direita do celular
-   marginBottom: 20,
-  },
-  navItem:{
-    alignItems: "center",         
-    justifyContent: "center",
-  },
-  navText:{
-    fontSize: 10,
-    color: "#696969",
-    marginTop: 4,
-    fontWeight: "700",
-  }
 });
