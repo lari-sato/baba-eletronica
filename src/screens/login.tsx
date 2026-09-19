@@ -1,45 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  SafeAreaView,
-  Text,
   TextInput,
   TouchableOpacity,
+  Text,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import BabyIcon from "../components/babyIcons";
-export default function App() {
+
+export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <SafeAreaView style={styles.SafeArea}>
-      <View style={styles.container}>
-        <BabyIcon size={120} color="#407888" />
+    <View style={styles.container}>
+      <BabyIcon size={120} color="#407888" />
+      <TextInput
+        style={styles.input}
+        placeholder="Usuário"
+        placeholderTextColor="#696969"
+      />
+
+      <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.input}
-          placeholder="Usuário"
-          placeholderTextColor="#696969"
-        />
-        <TextInput
-          style={styles.input}
+          style={styles.passwordInput}
           placeholder="Senha"
           placeholderTextColor="#696969"
-          secureTextEntry={true}
+          secureTextEntry={!showPassword}
         />
-        <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Entrar</Text>
+        <TouchableOpacity
+          onPress={() => setShowPassword(!showPassword)}
+          style={styles.eyeIcon}
+        >
+          <Ionicons
+            name={showPassword ? "eye" : "eye-off"}
+            size={22}
+            color="#696969"
+          />
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Entrar</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  SafeArea: {
-    flex: 1,
-    backgroundColor: "#BFDDF3",
-  },
   container: {
     flex: 1,
+    backgroundColor: "#BFDDF3",
     alignItems: "center",
     justifyContent: "center",
     gap: 25,
@@ -59,6 +71,23 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 10,
     fontWeight: "600",
+  },
+  passwordContainer: {
+    width: "80%",
+    height: 45,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+  },
+  passwordInput: {
+    flex: 1,
+    height: "100%",
+    fontWeight: "600",
+  },
+  eyeIcon: {
+    paddingLeft: 10,
   },
   button: {
     backgroundColor: "#407888",
