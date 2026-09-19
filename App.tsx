@@ -1,5 +1,5 @@
-import Discomfort from './src/screens/discomfort';
+import WifiScreen from './src/screens/wifiScreen';
 
 export default function App() {
-  return <Discomfort/>;
+  return <WifiScreen/>;
 }

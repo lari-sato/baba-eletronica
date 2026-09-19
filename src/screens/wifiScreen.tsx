@@ -6,14 +6,17 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; 
+
+import { Ionicons } from "@expo/vector-icons";
+import { BackButton } from "../components/backButton";
+import { Nav } from "../components/nav";
 
 export default function WifiScreen() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <View style={styles.container}>
-      
+      <BackButton onPress={() => console.log("Voltar")} />
       <View style={styles.header}>
         <Ionicons name="wifi" size={100} color="#407888" />
         <Text style={styles.title}>Conectar Wi-Fi</Text>
@@ -49,8 +52,11 @@ export default function WifiScreen() {
 
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Conectar</Text>
-
       </TouchableOpacity>
+      <Nav
+        onPressHistory={() => console.log("Ir para Histórico")}
+        onPressSettings={() => console.log("Ir para Configurações")}
+      />
     </View>
   );
 }
