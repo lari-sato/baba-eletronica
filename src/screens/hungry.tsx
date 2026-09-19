@@ -11,7 +11,7 @@ import { Nav } from "../components/nav";
 export default function Hungry() {
   return (
     <View style={styles.container}>
-      <BackButton onPress={() => console.log("Voltar")} />
+      <BackButton />
       <ResultPage
         time="14:30"
         percentage={70}

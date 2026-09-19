@@ -9,7 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import BabyIcon from "../components/babyIcons";
 
-export default function Login() {
+export default function Login({ navigation }: any) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -41,7 +41,10 @@ export default function Login() {
       </View>
       <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("History")}
+      >
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
     </View>

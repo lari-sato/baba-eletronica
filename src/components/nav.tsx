@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 interface NavProps {
   onPressHistory?: () => void;
@@ -9,6 +10,7 @@ interface NavProps {
 }
 
 export function Nav({ onPressHistory, onPressSettings, activeTab }: NavProps) {
+  const navigation = useNavigation<any>();
   const isHistoryActive = activeTab === "history";
   const isSettingsActive = activeTab === "settings";
   const historyColor = isHistoryActive ? "#407888" : "#696969";
@@ -17,26 +19,29 @@ export function Nav({ onPressHistory, onPressSettings, activeTab }: NavProps) {
     <View style={styles.nav}>
       <TouchableOpacity
         style={styles.navItem}
-        onPress={onPressHistory}
+        onPress={() => navigation.navigate("History")}
         activeOpacity={0.4}
       >
-        <Ionicons name={isHistoryActive ? "time" : "time-outline"} 
-          size={26} 
-          color={historyColor}/>
-        <Text style={[styles.navText, { color: historyColor }]}>
-          Histórico
-        </Text>
+        <Ionicons
+          name={isHistoryActive ? "time" : "time-outline"}
+          size={26}
+          color={historyColor}
+        />
+        <Text style={[styles.navText, { color: historyColor }]}>Histórico</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.navItem}
-        onPress={onPressSettings}
+        onPress={() => navigation.navigate("Settings")}
         activeOpacity={0.4}
       >
-        <Ionicons name={isSettingsActive ? "settings":"settings-outline"}
-          size={26} 
-          color={settingsColor}/>
-        <Text style={[styles.navText, { color:settingsColor}]}>Configurações
+        <Ionicons
+          name={isSettingsActive ? "settings" : "settings-outline"}
+          size={26}
+          color={settingsColor}
+        />
+        <Text style={[styles.navText, { color: settingsColor }]}>
+          Configurações
         </Text>
       </TouchableOpacity>
     </View>

@@ -12,7 +12,7 @@ export default function Discomfort() {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.container}>
-      <BackButton onPress={() => console.log("Voltar")} />
+      <BackButton />
       <ResultPage
         time="14:30"
         percentage={70}

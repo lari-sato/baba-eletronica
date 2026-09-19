@@ -16,7 +16,7 @@ import {
 export default function HistoryScreen() {
   return (
     <View style={styles.container}>
-      <BackButton onPress={() => console.log("Voltar")} />
+      <BackButton />
       <Text style={styles.title}>Histórico</Text>
       <View style={styles.divider} />
 

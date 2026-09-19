@@ -16,7 +16,7 @@ export default function WifiScreen() {
 
   return (
     <View style={styles.container}>
-      <BackButton onPress={() => console.log("Voltar")} />
+      <BackButton />
       <View style={styles.header}>
         <Ionicons name="wifi" size={60}color="#407888" />
         <Text style={styles.title}>Conectar Wi-Fi</Text>
