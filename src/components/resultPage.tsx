@@ -33,7 +33,10 @@ export function ResultPage({
       <View style={[styles.circle, { borderColor }]}>{icon}</View>
 
       <View style={styles.card}>
-        <Text style={styles.message}>{percentage}% de chance de ser:</Text>
+        <Text style={styles.message}>
+            {result === "Indefinido"
+            ? "O resultado foi:" : `${percentage}% de chance de ser:`}
+  </Text>
         <Text style={styles.result}>{result}</Text>
       </View>
     </View>

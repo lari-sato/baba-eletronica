@@ -14,7 +14,7 @@ export default function Pain() {
      <ResultPage
         time="14:30"
         percentage={70}
-        result="Fome"
+        result="Dor"
         borderColor="#8E0305"
         icon={<PainIcon size={160} color="#8E0305" />}
       />

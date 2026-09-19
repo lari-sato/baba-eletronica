@@ -1,30 +1,63 @@
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Modal } from "react-native";
 
 import { ResultPage } from "../components/resultPage";
 import { DiscomfortIcon } from "../components/babyIcons";
 import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
+import React, { useState } from "react"; 
 
 export default function Discomfort() {
+
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.container}>
       <BackButton onPress={() => console.log("Voltar")} />
       <ResultPage
         time="14:30"
         percentage={70}
-        result="Fome"
+        result="Desconforto"
         borderColor="#ca420c"
         icon={<DiscomfortIcon size={130} color="#ca420c" />}
       />
-      <TouchableOpacity style={styles.infoButton}>
+
+      
+      <TouchableOpacity style={styles.infoButton} onPress={() => setModalVisible(true)}>
         <Ionicons name="help-outline" size={35} color="#454545" />
-        <Text style={styles.infoButtonText}>ajuda</Text>
+        <Text style={styles.infoButtonText}>Explicação</Text>
       </TouchableOpacity>
+
       <Nav
         onPressHistory={() => console.log("Ir para Histórico")}
         onPressSettings={() => console.log("Ir para Configurações")}
       />
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            
+            <TouchableOpacity
+              style={styles.closeIconButton}
+              onPress={() => setModalVisible(false)}
+              activeOpacity={0.6}
+            >
+              <Ionicons name="close" size={24} color="#696969" />
+            </TouchableOpacity>
+
+            <Text style={styles.modalTitle}>O que é Desconforto?</Text>
+            
+            <Text style={styles.modalText}>
+              Este choro indica que o bebê pode estar incomodado com o frio, calor, etc.
+            </Text>
+
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -66,5 +99,44 @@ const styles = StyleSheet.create({
     color: "#454545",
     marginTop: -5,
     fontWeight: "500",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 25,
+  },
+  modalContent: {
+    width: "50%",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    padding: 22,
+    alignItems: "flex-start",
+    position: "relative", 
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  closeIconButton: {
+    position: "absolute",
+    top: 15,
+    right: 15,
+    padding: 5,
+    zIndex: 1,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#ca420c",
+    marginBottom: 10,
+    alignSelf: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    color: "#696969",
+     marginLeft: 20,
   },
 });

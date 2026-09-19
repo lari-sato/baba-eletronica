@@ -15,7 +15,7 @@ export default function Undefined() {
       <ResultPage
         time="14:30"
         percentage={70}
-        result="Fome"
+        result="Indefinido"
         borderColor="#878787"
         icon={<UndefinedIcon size={140} color="#878787" />}
       />
