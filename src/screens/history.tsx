@@ -72,6 +72,7 @@ export default function HistoryScreen() {
       </ScrollView>
 
       <Nav
+        activeTab="history" 
         onPressHistory={() => console.log("Ir para Histórico")}
         onPressSettings={() => console.log("Ir para Configurações")}
       />

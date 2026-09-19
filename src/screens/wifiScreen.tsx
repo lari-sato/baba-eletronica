@@ -18,7 +18,7 @@ export default function WifiScreen() {
     <View style={styles.container}>
       <BackButton onPress={() => console.log("Voltar")} />
       <View style={styles.header}>
-        <Ionicons name="wifi" size={100} color="#407888" />
+        <Ionicons name="wifi" size={60}color="#407888" />
         <Text style={styles.title}>Conectar Wi-Fi</Text>
         <Text style={styles.subtitle}>
           Insira os dados da sua rede para conectar a babá eletrônica
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 20,
+    paddingTop: 45
   },
   header: {
     alignItems: "center",

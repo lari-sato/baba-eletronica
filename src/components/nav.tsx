@@ -5,27 +5,39 @@ import { Ionicons } from "@expo/vector-icons";
 interface NavProps {
   onPressHistory?: () => void;
   onPressSettings?: () => void;
+  activeTab?: "history" | "settings";
 }
 
-export function Nav({ onPressHistory, onPressSettings }: NavProps) {
+export function Nav({ onPressHistory, onPressSettings, activeTab }: NavProps) {
+  const isHistoryActive = activeTab === "history";
+  const isSettingsActive = activeTab === "settings";
+  const historyColor = isHistoryActive ? "#407888" : "#696969";
+  const settingsColor = isSettingsActive ? "#407888" : "#696969";
   return (
     <View style={styles.nav}>
-      <TouchableOpacity 
-        style={styles.navItem} 
+      <TouchableOpacity
+        style={styles.navItem}
         onPress={onPressHistory}
         activeOpacity={0.4}
       >
-        <Ionicons name="time-outline" size={26} color="#696969" />
-        <Text style={styles.navText}>Histórico</Text>
+        <Ionicons name={isHistoryActive ? "time" : "time-outline"} 
+          size={26} 
+          color={historyColor}/>
+        <Text style={[styles.navText, { color: historyColor }]}>
+          Histórico
+        </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity 
-        style={styles.navItem} 
+      <TouchableOpacity
+        style={styles.navItem}
         onPress={onPressSettings}
         activeOpacity={0.4}
       >
-        <Ionicons name="settings-outline" size={26} color="#696969" />
-        <Text style={styles.navText}>Configurações</Text>
+        <Ionicons name={isSettingsActive ? "settings":"settings-outline"}
+          size={26} 
+          color={settingsColor}/>
+        <Text style={[styles.navText, { color:settingsColor}]}>Configurações
+        </Text>
       </TouchableOpacity>
     </View>
   );
