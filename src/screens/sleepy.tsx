@@ -19,7 +19,7 @@ export default function Sleepy() {
         icon={<SleepyIcon size={160} color="#8D49A4" />}
       />
       <Nav 
-        onPressHistory={() => console.log("Ir para Histórico")}
+        onPressHistory={() => navigation.navigate("History")}
         onPressSettings={() => console.log("Ir para Configurações")}
       />
     </View>

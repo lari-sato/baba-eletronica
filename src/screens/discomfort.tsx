@@ -20,41 +20,31 @@ export default function Discomfort() {
         borderColor="#ca420c"
         icon={<DiscomfortIcon size={130} color="#ca420c" />}
       />
-
-      
       <TouchableOpacity style={styles.infoButton} onPress={() => setModalVisible(true)}>
         <Ionicons name="help-outline" size={35} color="#454545" />
         <Text style={styles.infoButtonText}>Explicação</Text>
       </TouchableOpacity>
-
       <Nav
         onPressHistory={() => console.log("Ir para Histórico")}
         onPressSettings={() => console.log("Ir para Configurações")}
       />
-
       <Modal
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
+        onRequestClose={() => setModalVisible(false)}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            
             <TouchableOpacity
               style={styles.closeIconButton}
               onPress={() => setModalVisible(false)}
-              activeOpacity={0.6}
-            >
+              activeOpacity={0.6}>
               <Ionicons name="close" size={24} color="#696969" />
             </TouchableOpacity>
-
             <Text style={styles.modalTitle}>O que é Desconforto?</Text>
-            
             <Text style={styles.modalText}>
               Este choro indica que o bebê pode estar incomodado com o frio, calor, etc.
             </Text>
-
           </View>
         </View>
       </Modal>
@@ -80,9 +70,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: -10,
-
     elevation: 6,
-
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
@@ -90,7 +78,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-
     borderWidth: 3.3,
     borderColor: "#454545",
   },

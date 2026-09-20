@@ -20,27 +20,22 @@ export default function Login({ navigation }: any) {
         placeholder="Usuário"
         placeholderTextColor="#696969"
       />
-
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.passwordInput}
           placeholder="Senha"
           placeholderTextColor="#696969"
-          secureTextEntry={!showPassword}
-        />
+          secureTextEntry={!showPassword}/>
         <TouchableOpacity
           onPress={() => setShowPassword(!showPassword)}
-          style={styles.eyeIcon}
-        >
+          style={styles.eyeIcon}>
           <Ionicons
             name={showPassword ? "eye" : "eye-off"}
             size={22}
-            color="#696969"
-          />
+            color="#696969"/>
         </TouchableOpacity>
       </View>
       <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
-
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("History")}

@@ -30,7 +30,7 @@ export function Routes() {
   return (
     <Stack.Navigator
         initialRouteName="Login"
-        screenOptions={{ headerShown: false }} // Esconde a barra nativa do sistema
+        screenOptions={{ headerShown: false }} 
         >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Hungry" component={Hungry} />

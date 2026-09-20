@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -13,24 +14,25 @@ import { Nav } from "../components/nav";
 
 export default function WifiScreen() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleConnect = () => {
+    setModalVisible(true);
+  };
   return (
     <View style={styles.container}>
       <BackButton />
       <View style={styles.header}>
-        <Ionicons name="wifi" size={60}color="#407888" />
+        <Ionicons name="wifi" size={60} color="#407888" />
         <Text style={styles.title}>Conectar Wi-Fi</Text>
         <Text style={styles.subtitle}>
           Insira os dados da sua rede para conectar a babá eletrônica
         </Text>
       </View>
-
       <TextInput
         style={styles.input}
         placeholder="Nome da rede"
         placeholderTextColor="#696969"
       />
-
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.passwordInput}
@@ -49,14 +51,40 @@ export default function WifiScreen() {
           />
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleConnect}>
         <Text style={styles.buttonText}>Conectar</Text>
       </TouchableOpacity>
       <Nav
         onPressHistory={() => console.log("Ir para Histórico")}
         onPressSettings={() => console.log("Ir para Configurações")}
       />
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.closeIconButton}
+              onPress={() => setModalVisible(false)}
+              activeOpacity={0.6}>
+              <Ionicons name="close" size={24} color="#696969" />
+            </TouchableOpacity>
+            <Ionicons
+              name="checkmark-circle"
+              size={35}
+              color="#407888"
+              style={styles.iconSuccess}
+            />
+            <Text style={styles.modalTitle}>Conectado!</Text>
+            <Text style={styles.modalText}>
+              Sua rede foi conectada com sucesso.
+            </Text>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -68,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 20,
-    paddingTop: 45
+    paddingTop: 45,
   },
   header: {
     alignItems: "center",
@@ -126,5 +154,47 @@ const styles = StyleSheet.create({
     color: "#F6F6F6",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "#00000080",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 25,
+  },
+  modalContent: {
+    width: "50%",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    padding: 22,
+    alignItems: "center",
+    position: "relative",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  closeIconButton: {
+    position: "absolute",
+    top: 15,
+    right: 15,
+    padding: 5,
+    zIndex: 1,
+  },
+  iconSuccess: {
+    marginTop:-10,
+    marginBottom: -2,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#407888",
+    marginBottom: 8,
+  },
+  modalText: {
+    fontSize: 16,
+    color: "#696969",
+    textAlign: "center",
   },
 });
