@@ -3,11 +3,11 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { Routes } from "./src/routes";
 
-import Discomfort from './src/screens/discomfort';
+
 export default function App() {
   return (
     <NavigationContainer>
-    <Discomfort/>
+    <Routes/>
     </NavigationContainer>
   );
 }
