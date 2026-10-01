@@ -23,3 +23,11 @@ build/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Dados pesados
+*.zip
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.m4a
