@@ -1,11 +1,10 @@
 import React from "react";
-import Svg, { Path, G } from "react-native-svg";
+import Svg, { Path, G, Circle, Mask, Defs } from "react-native-svg";
 
 interface BabyIconsProps {
   size?: number;
   color?: string;
 }
-
 
 export default function BabyIcon({ size, color }: BabyIconsProps) {
   return (
@@ -24,7 +23,6 @@ export default function BabyIcon({ size, color }: BabyIconsProps) {
     </Svg>
   );
 }
-
 
 export function BabyBottle({ size, color }: BabyIconsProps) {
   return (
@@ -57,75 +55,60 @@ export function SleepyIcon({ size, color }: BabyIconsProps) {
 
 export function DiscomfortIcon({ size, color }: BabyIconsProps) {
   return (
-  <Svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-      <defs>
-        <mask id="lagrimaMask">
-          <circle cx="24" cy="25" r="24" fill="#FFFFFF" />
-          <Path
-            d="M 11.04 8.64 C 6.24 13.44 8.16 18.24 11.52 18.24 C 14.88 18.24 16.32 13.92 11.04 8.64 Z"
-            fill="#000000"
-            stroke="#000000"
-            strokeWidth="2.64"
-          />
-        </mask>
-      </defs>
-
-  
-      <G stroke={color}>
-        <circle
+    <Svg width={size} height={size} viewBox="0 0 48 48" fill="none">
+      <G stroke={color} strokeLinecap="round" strokeLinejoin="round">
+        {/* Círculo completo e perfeito da cabeça */}
+        <Circle
           cx="24"
           cy="25"
-          r="19.68"
+          r="18"
           strokeWidth="2.88"
-          strokeLinecap="round"
-          mask="url(#lagrimaMask)"
         />
 
+        {/* Lágrima por cima */}
         <Path
           d="M 11.04 8.64 C 6.24 13.44 8.16 18.24 11.52 18.24 C 14.88 18.24 16.32 13.92 11.04 8.64 Z"
           strokeWidth="2.64"
-          strokeLinecap="round"
-          strokeLinejoin="round"
         />
 
+        {/* Olho esquerdo */}
         <Path
           d="M 13.44 23.04 C 14.88 18.24 19.68 18.24 21.12 23.04"
           strokeWidth="2.88"
-          strokeLinecap="round"
         />
 
+        {/* Olho direito */}
         <Path
           d="M 26.88 23.04 C 28.32 18.24 33.12 18.24 34.56 23.04"
           strokeWidth="2.88"
-          strokeLinecap="round"
         />
 
+        {/* Boca triste */}
         <Path
           d="M 16.8 35.04 C 19.2 27.84 28.8 27.84 31.2 35.04"
           strokeWidth="2.88"
-          strokeLinecap="round"
         />
       </G>
     </Svg>
   );
-  
 }
+
 export function PainIcon({ size, color }: BabyIconsProps) {
   return (
-   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-  <G
-    fill="none"
-    stroke={color}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth="1.5"
-  >
-    <Path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0" />
-    <Path d="M7 8.5l2 2l-2 2" />
-    <Path d="M17 8.5l-2 2l2 2" />
-    <Path d="m8 16l2-2l2 2l2-2l2 2" />
-  </G>
-</Svg>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <G
+        fill="none"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      >
+        <Path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0" />
+        <Path d="M7 8.5l2 2l-2 2" />
+        <Path d="M17 8.5l-2 2l2 2" />
+        <Path d="m8 16l2-2l2 2l2-2l2 2" />
+      </G>
+    </Svg>
   );
 }
 

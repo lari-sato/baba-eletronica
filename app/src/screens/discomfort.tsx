@@ -18,7 +18,7 @@ export default function Discomfort() {
         percentage={70}
         result="Desconforto"
         borderColor="#ca420c"
-        icon={<DiscomfortIcon size={130} color="#ca420c" />}
+        icon={<DiscomfortIcon size={150} color="#ca420c" />}
       />
       <TouchableOpacity style={styles.infoButton} onPress={() => setModalVisible(true)}>
         <Ionicons name="help-outline" size={35} color="#454545" />
@@ -55,7 +55,7 @@ export default function Discomfort() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EA8E3D",
+    backgroundColor: "#ffac77",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   infoButton: {
     backgroundColor: "#f7f9fa",
-    width: "20%",
+    width: "35%",
     height: 70,
     borderRadius: 40,
     alignItems: "center",
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     borderWidth: 3.3,
-    borderColor: "#454545",
+    borderColor: "#696969",
   },
   infoButtonText: {
     fontSize: 16,
@@ -92,25 +92,30 @@ const styles = StyleSheet.create({
     backgroundColor: "#00000080",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
   },
   modalContent: {
-    width: "50%",
+    width: "85%",
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
-    padding: 22,
-    alignItems: "flex-start",
-    position: "relative", 
+    paddingVertical: 28,
+    paddingHorizontal: 25,
+    alignItems: "center",
+    position: "relative",
+
     elevation: 5,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
   closeIconButton: {
     position: "absolute",
-    top: 15,
-    right: 15,
+    top: 12,
+    right: 12,
     padding: 5,
     zIndex: 1,
   },
@@ -118,12 +123,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#ca420c",
-    marginBottom: 10,
-    alignSelf: "center",
+    marginBottom: 15,
+    textAlign: "center",
+    paddingHorizontal: 10,
   },
   modalText: {
-    fontSize: 18,
+    fontSize: 17,
     color: "#696969",
-     marginLeft: 20,
+    textAlign: "center",
+    lineHeight: 25,
+    width: "100%",
   },
 });
