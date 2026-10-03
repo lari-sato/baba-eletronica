@@ -29,7 +29,7 @@ export default function Hungry() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FDE76D",
+    backgroundColor: "#feef9a",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,

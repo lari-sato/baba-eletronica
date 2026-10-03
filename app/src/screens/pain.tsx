@@ -29,7 +29,7 @@ export default function Pain() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#E35B5B",
+    backgroundColor: "#f66c6c",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,
