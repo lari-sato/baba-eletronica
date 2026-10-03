@@ -38,7 +38,7 @@ export default function Login({ navigation }: any) {
       <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("History")}
+        onPress={() => navigation.navigate("Monitor")}
       >
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
