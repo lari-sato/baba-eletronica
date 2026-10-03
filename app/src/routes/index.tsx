@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
+import Monitor from "../screens/monitor";
 import Sleepy from '../screens/sleepy';
 import Pain from '../screens/pain';
 import Discomfort from '../screens/discomfort';
@@ -14,6 +14,7 @@ import Settings from "../screens/settings";
 
 export type RootStackParamList = {
   Login: undefined;
+  Monitor: undefined;
   Hungry: undefined;
   Discomfort: undefined;
   Sleepy: undefined;
@@ -32,6 +33,7 @@ export function Routes() {
         initialRouteName="Login"
         screenOptions={{ headerShown: false }} 
         >
+        <Stack.Screen name="Monitor" component={Monitor} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Hungry" component={Hungry} />
         <Stack.Screen name="Discomfort" component={Discomfort} />
