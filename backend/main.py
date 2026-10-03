@@ -2,6 +2,8 @@ import os
 import tempfile
 import numpy as np
 import librosa
+import tensorflow as tf
+from scipy.signal import butter, lfilter
 
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,6 +34,12 @@ DURACAO = 3.0
 N_MFCC = 40
 MAX_PAD_LEN = 130
 
+# Filtro de áudio 
+FILTRO_F_BAIXA = 250
+FILTRO_F_ALTA = 5000
+FILTRO_ORDEM = 4
+PRE_ENFASE_ALFA = 0.97
+
 THRESHOLD_FASE2_OUTROS = 0.45
 
 CONFIANCA_MINIMA_FASE3 = 0.45
@@ -49,6 +57,47 @@ classes_fase3 = np.load(CAMINHO_CLASSES_FASE3, allow_pickle=True)
 print("Modelos carregados com sucesso.")
 print("Classes Fase 3:", classes_fase3)
 
+# =========================================================
+# FUNÇÕES DE FILTRO
+# =========================================================
+
+def aplicar_pre_enfase(sinal, alfa=PRE_ENFASE_ALFA):
+    if len(sinal) == 0:
+        return sinal
+
+    return np.append(sinal[0], sinal[1:] - alfa * sinal[:-1])
+
+
+def filtrar_passa_banda(
+    sinal,
+    f_baixa=FILTRO_F_BAIXA,
+    f_alta=FILTRO_F_ALTA,
+    f_amostragem=SR,
+    ordem=FILTRO_ORDEM
+):
+    nyq = 0.5 * f_amostragem
+
+    baixa = f_baixa / nyq
+    alta = f_alta / nyq
+
+    b, a = butter(ordem, [baixa, alta], btype="band")
+
+    return lfilter(b, a, sinal)
+
+
+def aplicar_filtro_audio(audio, sample_rate):
+    audio = aplicar_pre_enfase(audio)
+
+    audio = filtrar_passa_banda(
+        audio,
+        f_baixa=FILTRO_F_BAIXA,
+        f_alta=FILTRO_F_ALTA,
+        f_amostragem=sample_rate,
+        ordem=FILTRO_ORDEM
+    )
+
+    return audio
+
 
 # =========================================================
 # FUNÇÕES DE PRÉ-PROCESSAMENTO
@@ -57,6 +106,7 @@ print("Classes Fase 3:", classes_fase3)
 def padronizar_mfcc(mfcc, max_pad_len=MAX_PAD_LEN):
     if mfcc.shape[1] < max_pad_len:
         pad_width = max_pad_len - mfcc.shape[1]
+
         mfcc = np.pad(
             mfcc,
             pad_width=((0, 0), (0, pad_width)),
@@ -74,6 +124,9 @@ def extrair_mfcc_simples(caminho_audio):
         sr=SR,
         duration=DURACAO
     )
+
+    # Filtro aplicado antes do MFCC
+    audio = aplicar_filtro_audio(audio, sample_rate)
 
     mfcc = librosa.feature.mfcc(
         y=audio,
@@ -123,7 +176,8 @@ def classificar_audio(caminho_audio):
             "prob_fome": round(prob_fome, 4),
             "prob_outros": round(prob_outros, 4),
             "fase3": None,
-            "confianca": round(prob_fome, 4)
+            "confianca": round(prob_fome, 4),
+            "pre_processamento": "pre_enfase + passa_banda + mfcc"
         }
 
     # -----------------------------
@@ -164,7 +218,8 @@ def classificar_audio(caminho_audio):
             "prob_classe_2": round(prob_2, 4),
             "diferenca": round(diferenca, 4)
         },
-        "confianca": round(prob_1, 4)
+        "confianca": round(prob_1, 4),
+        "pre_processamento": "pre_enfase + passa_banda + mfcc"
     }
 
 
@@ -176,13 +231,13 @@ def classificar_audio(caminho_audio):
 def home():
     return {
         "mensagem": "Backend Luz e Colo ativo",
-        "status": "ok"
+        "status": "ok",
+        "pre_processamento": "pre_enfase + passa_banda + mfcc"
     }
-
 
 @app.post("/classificar")
 async def classificar(file: UploadFile = File(...)):
-    extensoes_permitidas = [".wav", ".mp3", ".ogg", ".flac", ".m4a"]
+    extensoes_permitidas = [".wav", ".mp3", ".ogg", ".flac", ".m4a", ".3gp"]
 
     nome_arquivo = file.filename.lower()
 

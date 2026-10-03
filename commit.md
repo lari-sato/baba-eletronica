@@ -1,23 +1,29 @@
-# Padrões de commits 📜
+# Padronizando Commits 📜
 
 De acordo com a documentação do **[Conventional Commits](https://www.conventionalcommits.org/pt-br)**, commits semânticos são uma convenção simples para ser utilizada nas mensagens de commit. 
 
-## Tipo e descrição 📝
-Os commits serão feitos a partir do **tipo** + mudança implementada **EM INGLÊS** e **EM MINÚSCULO** (ex.: _"feat: added homescreenpage"_).
+## Tipos de Commit 📝
 
-- `feat`- Indicam que seu trecho de código está incluindo um **novo recurso ou funcionalidade**.
+- `feat` - Indica a adição de uma **nova funcionalidade ou recurso** ao projeto.
 
-- `fix` - Indicam que seu trecho de código está **solucionando um problema**.
+- `fix` - Indica a **correção de um erro ou problema** no código.
 
-- `docs` - Indicam que houveram **mudanças na documentação**, como por exemplo no Readme do seu repositório (não inclui alterações em código).
+- `docs` - Indica alterações relacionadas à **documentação**, como mudanças no `README`, comentários ou arquivos de instrução.
 
-- `chore` - Indicam **atualizações de tarefas** de build, configurações de administrador, pacotes... como por exemplo adicionar um pacote no gitignore. (Não inclui alterações em código)
+- `chore` - Indica alterações de **manutenção do projeto** que não afetam diretamente a funcionalidade, como atualização de dependências, configurações ou organização de arquivos.
 
-- `refactor` - Indicam mudanças devido a **que não alterem sua funcionalidade**, como melhorias. 
+- `refactor` - Indica uma **reestruturação ou melhoria interna do código** sem alterar seu comportamento ou funcionalidade.
 
-- `remove` - Indicam a exclusão de arquivos, diretórios ou funcionalidades não utilizadas, reduzindo o tamanho ou complexidade do projeto e mantendo-o mais organizado.
+- `cleanup` - Indica uma **limpeza no código**, como remoção de comentários desnecessários ou qualquer outro ajuste para melhorar a legibilidade.
 
-## Emojis para commits (Opcional) 💈
+- `remove` - Indica a **remoção de arquivos, diretórios, código ou funcionalidades** que não são mais necessários.
+
+Ou seja...
+
+ **COMMIT** = `TIPO` + `breve descrição do que foi feito` (em **inglês**, **minúsculo** e até 50 caracteres). 
+- Por exemplo: _"feat: added homescreenpage"_.
+
+## Uso de Emojis em Commits 💈
 
 <table>
   <thead>
@@ -81,13 +87,12 @@ Os commits serão feitos a partir do **tipo** + mudança implementada **EM INGL�
       <td>💡 <code>:bulb:</code></td>
       <td><code>docs</code></td>
        <td>
-        <code>git commit -m ":bulb: docs: comments on tutorial page"</code>
+        <code>git commit -m ":bulb: docs: added comments on tutorial page"</code>
       </td>
       <td>💡 docs: comments on tutorial page </td>
     </tr>
     <tr>
-    <tr>
-      <td>Mover/Renomear Arquivos ou Pastas</td>
+      <td>Manutenção de Arquivos/Pastas</td>
       <td>🚚 <code>:truck:</code></td>
       <td><code>chore</code></td>
        <td>
@@ -95,6 +100,7 @@ Os commits serão feitos a partir do **tipo** + mudança implementada **EM INGL�
       </td>
       <td>🚚 chore: renamed folder </td>
     </tr>
+    <tr>
         <td>Refatoração</td>
         <td>♻️ <code>:recycle:</code></td>
         <td><code>refactor</code></td>
@@ -103,14 +109,23 @@ Os commits serão feitos a partir do **tipo** + mudança implementada **EM INGL�
       </td>
       <td>♻️ refactor: improved functionality</td>
     </tr>
+      <tr>
+        <td>Limpeza</td>
+        <td>🧹 <code>:broom:</code></td>
+        <td><code>cleanup</code></td>
+         <td>
+        <code>git commit -m ":broom: cleanup: removed commentary"</code>
+      </td>
+      <td>🧹 cleanup: removed commentary </td>
+    </tr>
     <tr>
-      <td>Removendo um arquivo</td>
+      <td>Remoção de elementos</td>
       <td>🗑️ <code>:wastebasket:</code></td>
       <td><code>remove</code></td>
        <td>
-        <code>git commit -m ":wastebasket: remove: removed file"</code>
+        <code>git commit -m ":wastebasket: remove: deleted file"</code>
       </td>
-      <td>🗑️ remove: removed file </td>
+      <td>🗑️ remove: deleted file </td>
     </tr>
     <tr>
       <td>Revertendo mudanças</td>
@@ -124,30 +139,55 @@ Os commits serão feitos a partir do **tipo** + mudança implementada **EM INGL�
   </tbody>
 </table>
 
-# Principais comandos do Git 💻
+# Comandos Git Essenciais 💻
 
-- `git clone url-do-repositorio-no-github` - Clona um repositório remoto existente no GitHub para o seu ambiente local.
+- `git clone <url-do-repositorio>`  
+  Clona um repositório remoto para o computador.
 
-- `git init` - Inicializa um novo repositório Git no diretório atual.
+- `git init`  
+  Inicializa um repositório Git no diretório atual.
 
-- `git add .` - Adiciona todos os arquivos e alterações no diretório atual para a área de stage (preparando-os para o commit).
+- `git add .`  
+  Adiciona todas as alterações à área de stage.
 
-- `git commit -m "mensagem do commit"` - Registra as alterações adicionadas na área de stage com uma mensagem descritiva sobre o que foi modificado.
+- `git commit -m "mensagem"`  
+  Cria um commit com as alterações adicionadas.
 
-- `git push -u origin main` - Envia os commits da branch main do repositório local para o repositório remoto origin e define main como a branch padrão para futuros push e pull. O -u (ou --set-upstream) configura a branch upstream para facilitar os próximos comandos git push e git pull e eliminar a necessidade de especificar a branch.
+- `git push -u origin main`  
+  Envia a branch `main` ao repositório remoto e define seu upstream.
 
-- `git fetch` - Busca todas as atualizações do repositório remoto sem integrá-las à branch atual. Isso atualiza as referências remotas.
+- `git fetch`  
+  Busca atualizações do repositório remoto sem aplicá-las à branch atual.
 
-- `git pull origin main` - Atualiza a branch local main com as mudanças do repositório remoto origin. Combina git fetch e git merge.
+- `git pull origin main`  
+  Busca e integra as alterações da branch `main` remota.
 
-- `git push --force-with-lease` - Forma mais segura de forçar o envio de alterações locais para o repositório remoto. Verifica se não houve alterações feitas por outros colaboradores desde sua última atualização local, evitando sobrescrever acidentalmente o trabalho de outros.
+- `git push --force-with-lease`  
+  Força o push com uma verificação de segurança para evitar sobrescrever alterações remotas inesperadas.
 
-- `git revert id_do_commit_que_vai_ser_revertido` - Cria um novo commit que desfaz as alterações feitas pelo commit especificado, preservando o histórico. Útil para desfazer mudanças de forma segura sem reescrever o histórico.
+- `git revert <id-do-commit>`  
+  Cria um novo commit que desfaz as alterações de um commit anterior.
 
-- `git reset --hard id_do_commit_anterior_ao_que_vai_ser_apagado` - Redefine o repositório para o estado do commit especificado, apagando todas as mudanças feitas após esse commit. Ideal para uso local. Para sincronizar remotamente, use `git push --force-with-lease` posteriormente.
+- `git reset --hard <id-do-commit>`  
+  Retorna o repositório ao commit indicado, descartando alterações posteriores.
 
-- `git commit --amend -m "mensagem_reescrita"` - Altera a mensagem do último commit. Após usar este comando, sincronize remotamente com `git push --force-with-lease`.
+- `git commit --amend -m "nova mensagem"`  
+  Altera a mensagem do último commit.
 
-- `git cherry-pick HASH_DO_COMMIT` - Utilizado para obter um commit específico. Exemplo de uso: Imagine que você tenha duas branchs (main) e (develop) e na segunda você tem 3 commits mas deseja apenas pegar o primeiro commit dela, com o uso de cherry-pick você pode.
+- `git cherry-pick <hash-do-commit>`  
+  Aplica um commit específico de outra branch à branch atual.
 
-- `git switch <branch>` - Alterna para uma branch diferente no repositório local. Use `git switch -c <branch>` para criar e alternar para uma nova branch.
+- `git switch <branch>`  
+  Alterna para outra branch.
+
+- `git switch -c <branch>`  
+  Cria uma nova branch e alterna para ela.
+
+---
+
+## Referências 
+- Conventional Commits. Disponível em: <https://www.conventionalcommits.org/pt-br/v1.0.0/>. Acesso em: 9 set.. 2026.
+
+- IURICODE. GitHub - iuricode/padroes-de-commits: Padrões de commits. Disponível em: <https://github.com/iuricode/padroes-de-commits>. Acesso em: 9 set.. 2026.
+
+- Git - git Documentation. Disponível em: <https://git-scm.com/docs/git/pt_BR>. Acesso em: 9 set.. 2026.
