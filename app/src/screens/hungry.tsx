@@ -8,13 +8,15 @@ import { BabyBottle } from "../components/babyIcons";
 import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
 
-export default function Hungry() {
+export default function Hungry({ route }: any) {
+  const { respostaBackend } = route.params;
+
   return (
     <View style={styles.container}>
       <BackButton />
       <ResultPage
         time="14:30"
-        percentage={70}
+        percentage={Number(respostaBackend.resultado.confianca)*100.toFixed(2)}
         result="Fome"
         borderColor="#E7BC0F"
         icon={<BabyBottle size={120} color="#E7BC0F" />}

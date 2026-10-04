@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 import { consultarStatusESP32, baixarAudioESP32, enviarAudioParaBackend } from "../services/api";
@@ -15,23 +14,23 @@ export default function Monitor({ navigation }: any) {
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState("");
 
-  function navegarParaResultado(resultadoFinal: string) {
-    const resultado = resultadoFinal.toLowerCase();
+  function navegarParaResultado(respostaBackend: any) {
+    const resultado = respostaBackend.resultado.resultado_final.toLowerCase();
 
     if (resultado.includes("fome")) {
-      navigation.navigate("Hungry");
+      navigation.navigate("Hungry", { respostaBackend });
     } else if (resultado.includes("dor")) {
-      navigation.navigate("Pain");
+      navigation.navigate("Pain", { respostaBackend });
     } else if (resultado.includes("desconforto")) {
-      navigation.navigate("Discomfort");
+      navigation.navigate("Discomfort", { respostaBackend });
     } else if (
       resultado.includes("cansaço") ||
       resultado.includes("cansaco") ||
       resultado.includes("sono")
     ) {
-      navigation.navigate("Sleepy");
+      navigation.navigate("Sleepy", { respostaBackend });
     } else {
-      navigation.navigate("Undefined");
+      navigation.navigate("Undefined", { respostaBackend });
     }
   }
 
@@ -56,11 +55,9 @@ export default function Monitor({ navigation }: any) {
 
       const respostaBackend = await enviarAudioParaBackend(uriAudio);
 
-      const resultadoFinal = respostaBackend.resultado.resultado_final;
+      setStatus(`Resultado: ${ respostaBackend.resultado.resultado_final}`);
 
-      setStatus(`Resultado: ${resultadoFinal}`);
-
-      navegarParaResultado(resultadoFinal);
+      navegarParaResultado(respostaBackend);
     } catch (error: any) {
       setErro(error.message || "Erro inesperado");
       setStatus("Falha na verificação");
@@ -68,6 +65,30 @@ export default function Monitor({ navigation }: any) {
       setCarregando(false);
     }
   }
+
+  useEffect(() => {
+    let executando = false;
+  
+    const verificarPeriodicamente = async () => {
+      if (executando) return;
+  
+      executando = true;
+  
+      try {
+        await verificarChoro();
+      } finally {
+        executando = false;
+      }
+    };
+  
+    verificarPeriodicamente();
+  
+    const intervalId = setInterval(verificarPeriodicamente, 5000);
+  
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -79,19 +100,12 @@ export default function Monitor({ navigation }: any) {
         {carregando && <ActivityIndicator size="large" color="#407888" />}
 
         {erro !== "" && <Text style={styles.error}>{erro}</Text>}
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={verificarChoro}
-          disabled={carregando}
-        >
-          <Text style={styles.buttonText}>
-            {carregando ? "Verificando..." : "Verificar agora"}
-          </Text>
-        </TouchableOpacity>
       </View>
 
-      <Nav />
+      <Nav
+        onPressHistory={() => navigation.navigate("History")}
+        onPressSettings={() => navigation.navigate("Settings")}
+      />
     </View>
   );
 }
@@ -128,18 +142,5 @@ const styles = StyleSheet.create({
     color: "#c92023",
     fontSize: 14,
     textAlign: "center",
-  },
-  button: {
-    backgroundColor: "#407888",
-    width: "80%",
-    height: 50,
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: "#F6F6F6",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

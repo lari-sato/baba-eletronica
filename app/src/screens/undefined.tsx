@@ -8,13 +8,15 @@ import { UndefinedIcon } from "../components/babyIcons";
 import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
 
-export default function Undefined() {
+export default function Undefined({ route }: any) {
+  const { respostaBackend } = route.params;
+
   return (
     <View style={styles.container}>
       <BackButton />
       <ResultPage
         time="14:30"
-        percentage={70}
+        percentage={Number(respostaBackend.resultado.confianca)*100.toFixed(2)}
         result="Indefinido"
         borderColor="#878787"
         icon={<UndefinedIcon size={140} color="#878787" />}

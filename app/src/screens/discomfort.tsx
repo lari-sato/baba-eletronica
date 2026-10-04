@@ -7,7 +7,8 @@ import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
 import React, { useState } from "react"; 
 
-export default function Discomfort() {
+export default function Discomfort({ route }: any) {
+  const { respostaBackend } = route.params;
 
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -15,7 +16,7 @@ export default function Discomfort() {
       <BackButton />
       <ResultPage
         time="14:30"
-        percentage={70}
+        percentage={Number(respostaBackend.resultado.confianca)*100.toFixed(2)}
         result="Desconforto"
         borderColor="#ca420c"
         icon={<DiscomfortIcon size={150} color="#ca420c" />}
