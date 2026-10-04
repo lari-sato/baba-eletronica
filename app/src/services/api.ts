@@ -1,7 +1,7 @@
-import * as FileSystem from "expo-file-system";
+import * as FileSystem from "expo-file-system/legacy";
 
-const ESP32_URL = "http://192.168.0.50";
-const BACKEND_URL = "http://192.168.0.25:8000";
+const ESP32_URL = "http://192.168.68.67"; // Endereço IP correto da ESP32 na sua rede
+const BACKEND_URL = "http://10.0.2.2:8000";  // Endereço IP correto do backend (emulador ou localhost)
 const ESP32_CONFIG_URL = "http://192.168.4.1";
 
 export async function consultarStatusESP32() {
@@ -30,24 +30,22 @@ export async function baixarAudioESP32() {
 }
 
 export async function enviarAudioParaBackend(uriDoAudio: string) {
-  const formData = new FormData();
+  const resposta = await FileSystem.uploadAsync(
+    `${BACKEND_URL}/classificar`,
+    uriDoAudio,
+    {
+      httpMethod: "POST",
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: "file",
+      mimeType: "audio/wav",
+    }
+  );
 
-  formData.append("file", {
-    uri: uriDoAudio,
-    name: "audio_choro.wav",
-    type: "audio/wav",
-  } as any);
-
-  const resposta = await fetch(`${BACKEND_URL}/classificar`, {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!resposta.ok) {
+  if (resposta.status < 200 || resposta.status >= 300) {
     throw new Error("Erro ao enviar áudio para o backend");
   }
 
-  return await resposta.json();
+  return JSON.parse(resposta.body);
 }
 
 export async function configurarWifiESP32(ssid: string, password: string) {
