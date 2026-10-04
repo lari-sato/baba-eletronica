@@ -16,7 +16,7 @@ export default function Undefined({ route }: any) {
       <BackButton />
       <ResultPage
         time="14:30"
-        percentage={${Math.round(Number(respostaBackend.resultado.confianca) * 100)}%}
+        percentage={Math.round(Number(respostaBackend.resultado.confianca) * 100)}
         result="Indefinido"
         borderColor="#878787"
         icon={<UndefinedIcon size={140} color="#878787" />}

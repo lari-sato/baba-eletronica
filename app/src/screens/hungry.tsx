@@ -16,7 +16,7 @@ export default function Hungry({ route }: any) {
       <BackButton />
       <ResultPage
         time="14:30"
-        percentage={${Math.round(Number(respostaBackend.resultado.confianca) * 100)}%}
+        percentage={Math.round(Number(respostaBackend.resultado.confianca) * 100)}
         result="Fome"
         borderColor="#E7BC0F"
         icon={<BabyBottle size={120} color="#E7BC0F" />}
