@@ -1,5 +1,11 @@
 // =========================================================
-// BABÁ ELETRÔNICA: ESP32-S3 + MAX9814 + FASE 1 EMBARCADA
+// BABÁ ELETRÔNICA - ESP32-S3 + MAX9814 + FASE 1 EMBARCADA
+
+// - Wi-Fi configurável via modo AP (/wifi)
+// - Fase 1 da CNN sem MFCC, usando features simples
+// - Uso de modelo TFLite INT8 + scaler gerado no Colab
+// - /audio envia o áudio salvo no momento da detecção, com 3 segundos
+// =========================================================
 
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -7,6 +13,8 @@
 #include <ESPmDNS.h>
 #include <Preferences.h>
 #include <math.h>
+#include <string.h>
+#include "esp_heap_caps.h"
 
 // =========================================================
 // HEADERS GERADOS NO COLAB
@@ -40,28 +48,37 @@ IPAddress mascaraEsp32(255, 255, 255, 0);
 // CONFIGURAÇÕES DO MICROFONE MAX9814
 // =========================================================
 
-// Ajuste conforme o pino ADC usado na ESP32-S3.
-// No codigo_completo estava como GPIO 4.
-// Se o MAX9814 estiver ligado em outro ADC, altere aqui.
 const int pinoMicrofone = 4;
 
 // ADC do ESP32-S3: 0 a 4095.
-// O sinal é centralizado em torno de 2048.
 const int ADC_CENTRO = 2048;
 
-// Captura de áudio para a Fase 1 sem MFCC
+// Captura de áudio para a Fase 1 sem MFCC.
 const int SAMPLE_RATE = 16000;
 const int DURACAO_SEGUNDOS = 1;
 const int NUM_AMOSTRAS = SAMPLE_RATE * DURACAO_SEGUNDOS;
 
-// Buffer de áudio: 16000 amostras x 2 bytes = 32 KB
+// Áudio enviado para o backend.
+const int DURACAO_AUDIO_ENVIO_SEGUNDOS = 3;
+const int NUM_AMOSTRAS_AUDIO_ENVIO = SAMPLE_RATE * DURACAO_AUDIO_ENVIO_SEGUNDOS;
+
+// Buffer atual da Fase 1: 16000 amostras x 2 bytes = 32 KB
 int16_t audioBuffer[NUM_AMOSTRAS];
 
-// Limiar simples para evitar rodar IA no silêncio.
-// Pode precisar de ajuste no teste real.
-float LIMIAR_ENERGIA = 80.0;
+// Buffers maiores para /audio.
+int16_t* audioHistoricoBuffer = nullptr;
+int16_t* audioSalvoBuffer = nullptr;
 
-// Features iguais ao Colab:7 globais + 10 RMS por segmento + 9 diferenças = 26 features
+int indiceHistoricoAudio = 0;
+bool historicoAudioCompleto = false;
+unsigned long momentoAudioSalvo = 0;
+
+const unsigned long TEMPO_VALIDADE_AUDIO_MS = 60000;
+
+// Limiar para evitar rodar IA no silêncio
+float LIMIAR_ENERGIA = 600;
+
+// Features de treinamento: 7 globais + 10 RMS por segmento + 9 diferenças = 26 features
 const int NUM_SEGMENTOS = 10;
 
 // =========================================================
@@ -83,8 +100,7 @@ tflite::MicroInterpreter* interpreter = nullptr;
 TfLiteTensor* input = nullptr;
 TfLiteTensor* output = nullptr;
 
-// Para modelo Dense pequeno, 40 KB geralmente é suficiente.
-// Se AllocateTensors falhar, aumentar para 60 * 1024 ou 80 * 1024.
+// Se AllocateTensors falhar, aumente para 60 * 1024 ou 80 * 1024.
 constexpr int kTensorArenaSize = 60 * 1024;
 uint8_t tensor_arena[kTensorArenaSize];
 
@@ -219,6 +235,121 @@ void handleWifiReset() {
 }
 
 // =========================================================
+// GERENCIAMENTO DO ÁUDIO SALVO PARA O BACKEND
+// =========================================================
+
+bool iniciarBuffersAudio() {
+  const size_t tamanhoBytes = NUM_AMOSTRAS_AUDIO_ENVIO * sizeof(int16_t);
+
+  audioHistoricoBuffer = (int16_t*)heap_caps_malloc(
+    tamanhoBytes,
+    MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT
+  );
+
+  audioSalvoBuffer = (int16_t*)heap_caps_malloc(
+    tamanhoBytes,
+    MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT
+  );
+
+  if (audioHistoricoBuffer == nullptr || audioSalvoBuffer == nullptr) {
+    Serial.println("AVISO: nao foi possivel alocar audio na PSRAM. Tentando RAM interna...");
+
+    if (audioHistoricoBuffer == nullptr) {
+      audioHistoricoBuffer = (int16_t*)malloc(tamanhoBytes);
+    }
+
+    if (audioSalvoBuffer == nullptr) {
+      audioSalvoBuffer = (int16_t*)malloc(tamanhoBytes);
+    }
+  }
+
+  if (audioHistoricoBuffer == nullptr || audioSalvoBuffer == nullptr) {
+    Serial.println("ERRO: falha ao alocar buffers de audio de 3 segundos.");
+    Serial.println("Ative PSRAM nas configuracoes da placa ou reduza DURACAO_AUDIO_ENVIO_SEGUNDOS.");
+    return false;
+  }
+
+  memset(audioHistoricoBuffer, 0, tamanhoBytes);
+  memset(audioSalvoBuffer, 0, tamanhoBytes);
+
+  Serial.print("Buffers de audio alocados. Duracao enviada em /audio: ");
+  Serial.print(DURACAO_AUDIO_ENVIO_SEGUNDOS);
+  Serial.println(" segundos.");
+
+  return true;
+}
+
+void registrarAmostraNoHistorico(int16_t amostra) {
+  if (audioHistoricoBuffer == nullptr) {
+    return;
+  }
+
+  audioHistoricoBuffer[indiceHistoricoAudio] = amostra;
+  indiceHistoricoAudio++;
+
+  if (indiceHistoricoAudio >= NUM_AMOSTRAS_AUDIO_ENVIO) {
+    indiceHistoricoAudio = 0;
+    historicoAudioCompleto = true;
+  }
+}
+
+void salvarAudioDaDeteccao() {
+  if (audioHistoricoBuffer == nullptr || audioSalvoBuffer == nullptr) {
+    Serial.println("ERRO: buffers de audio nao inicializados.");
+    return;
+  }
+
+  const int totalDisponivel = historicoAudioCompleto ? NUM_AMOSTRAS_AUDIO_ENVIO : indiceHistoricoAudio;
+
+  if (totalDisponivel <= 0) {
+    Serial.println("AVISO: ainda nao ha audio suficiente no historico.");
+    return;
+  }
+
+  if (historicoAudioCompleto) {
+    // Quando o buffer circular ja completou 3 segundos,
+    // a amostra mais antiga esta no indice atual.
+    const int inicio = indiceHistoricoAudio;
+
+    for (int i = 0; i < NUM_AMOSTRAS_AUDIO_ENVIO; i++) {
+      const int origem = (inicio + i) % NUM_AMOSTRAS_AUDIO_ENVIO;
+      audioSalvoBuffer[i] = audioHistoricoBuffer[origem];
+    }
+  } else {
+    // Antes de completar 3 segundos de historico,
+    // preenche o inicio com silencio e coloca o audio disponivel no final.
+    const int totalSilencio = NUM_AMOSTRAS_AUDIO_ENVIO - totalDisponivel;
+
+    for (int i = 0; i < totalSilencio; i++) {
+      audioSalvoBuffer[i] = 0;
+    }
+
+    for (int i = 0; i < totalDisponivel; i++) {
+      audioSalvoBuffer[totalSilencio + i] = audioHistoricoBuffer[i];
+    }
+  }
+
+  audioDisponivel = true;
+  momentoAudioSalvo = millis();
+
+  Serial.print("Audio salvo para envio ao backend: ");
+  Serial.print(DURACAO_AUDIO_ENVIO_SEGUNDOS);
+  Serial.println(" segundos.");
+}
+
+bool audioSalvoValido() {
+  if (!audioDisponivel || audioSalvoBuffer == nullptr) {
+    return false;
+  }
+
+  if ((unsigned long)(millis() - momentoAudioSalvo) > TEMPO_VALIDADE_AUDIO_MS) {
+    return false;
+  }
+
+  return true;
+}
+
+// =========================================================
 // SERVIDOR WEB
 // =========================================================
 
@@ -266,14 +397,14 @@ int16_t limitarInt16(int32_t valor) {
 }
 
 void handleAudio() {
-  if (!audioDisponivel) {
-    server.send(503, "application/json", "{\"erro\":\"audio ainda nao disponivel\"}");
+  if (!audioSalvoValido()) {
+    server.send(503, "application/json", "{\"erro\":\"nenhum audio de choro recente disponivel\"}");
     return;
   }
 
   const uint16_t channels = 1;
   const uint16_t bitsPerSample = 16;
-  const uint32_t dataSize = NUM_AMOSTRAS * sizeof(int16_t);
+  const uint32_t dataSize = NUM_AMOSTRAS_AUDIO_ENVIO * sizeof(int16_t);
   const uint32_t totalSize = 44 + dataSize;
 
   uint8_t header[44];
@@ -290,15 +421,15 @@ void handleAudio() {
   const int AMOSTRAS_POR_BLOCO = 256;
   uint8_t bloco[AMOSTRAS_POR_BLOCO * 2];
 
-  for (int i = 0; i < NUM_AMOSTRAS; i += AMOSTRAS_POR_BLOCO) {
+  for (int i = 0; i < NUM_AMOSTRAS_AUDIO_ENVIO; i += AMOSTRAS_POR_BLOCO) {
     int qtd = AMOSTRAS_POR_BLOCO;
 
-    if (i + qtd > NUM_AMOSTRAS) {
-      qtd = NUM_AMOSTRAS - i;
+    if (i + qtd > NUM_AMOSTRAS_AUDIO_ENVIO) {
+      qtd = NUM_AMOSTRAS_AUDIO_ENVIO - i;
     }
 
     for (int j = 0; j < qtd; j++) {
-      int16_t amostra = limitarInt16((int32_t)audioBuffer[i + j] * GANHO_WAV);
+      int16_t amostra = limitarInt16((int32_t)audioSalvoBuffer[i + j] * GANHO_WAV);
       bloco[2 * j] = amostra & 0xff;
       bloco[2 * j + 1] = (amostra >> 8) & 0xff;
     }
@@ -331,7 +462,7 @@ void handleRoot() {
   html += "<p><b>Energia do audio:</b> " + String(energiaAtual, 2) + "</p>";
   html += "<p><b>Probabilidade de choro:</b> " + String(probChoroAtual * 100.0, 1) + "%</p>";
   html += "<p><b>Modelo:</b> Fase 1 sem MFCC - features simples</p>";
-  html += "<p><b>Audio:</b> <a href='/audio'>baixar ultimo audio captado</a></p>";
+  html += "<p><b>Audio:</b> <a href='/audio'>baixar audio salvo da deteccao (3s)</a></p>";
   html += "</body>";
   html += "</html>";
 
@@ -339,6 +470,13 @@ void handleRoot() {
 }
 
 void handleStatus() {
+  bool audioRecente = audioSalvoValido();
+  unsigned long idadeAudioMs = 0;
+
+  if (audioRecente) {
+    idadeAudioMs = millis() - momentoAudioSalvo;
+  }
+
   String json = "{";
   json += "\"status\":\"" + som + "\",";
   json += "\"valorMic\":" + String(valorMic) + ",";
@@ -346,11 +484,14 @@ void handleStatus() {
   json += "\"probChoro\":" + String(probChoroAtual, 4) + ",";
   json += "\"modelo\":\"fase1_sem_mfcc\",";
   json += "\"wifiConfigurado\":" + String(wifiConfigurado ? "true" : "false") + ",";
-  json += "\"audioDisponivel\":" + String(audioDisponivel ? "true" : "false");
+  json += "\"audioDisponivel\":" + String(audioRecente ? "true" : "false") + ",";
+  json += "\"duracaoAudioSegundos\":" + String(DURACAO_AUDIO_ENVIO_SEGUNDOS) + ",";
+  json += "\"idadeAudioMs\":" + String(idadeAudioMs);
   json += "}";
 
   server.send(200, "application/json", json);
 }
+
 
 void handleNotFound() {
   String message = "Arquivo nao encontrado\n\n";
@@ -451,12 +592,15 @@ void capturarAudio() {
     valorMic = leitura;
 
     // Centraliza em torno de zero
-    audioBuffer[i] = leitura - ADC_CENTRO;
+    int16_t amostraCentralizada = leitura - ADC_CENTRO;
+    audioBuffer[i] = amostraCentralizada;
+
+    // Mantém um histórico circular dos últimos 3 segundos.
+    // Esse histórico é congelado quando a Fase 1 detecta choro.
+    registrarAmostraNoHistorico(amostraCentralizada);
 
     proximaLeitura += intervaloMicros;
   }
-
-  audioDisponivel = true;
 }
 
 // =========================================================
@@ -677,6 +821,8 @@ void setup() {
   analogReadResolution(12);
   analogSetAttenuation(ADC_11db);
 
+  iniciarBuffersAudio();
+
   iniciarModelo();
 
   preferences.begin("wifi", true);
@@ -740,6 +886,7 @@ void loop() {
 
     if (probChoroAtual >= 0.50) {
       som = "bebe chorando";
+      salvarAudioDaDeteccao();
       Serial.println("Status: bebe chorando");
     } else {
       som = "ruido ambiental";
