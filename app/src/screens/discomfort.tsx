@@ -16,7 +16,7 @@ export default function Discomfort({ route }: any) {
       <BackButton />
       <ResultPage
         time="14:30"
-        percentage={Number(respostaBackend.resultado.confianca)*100.toFixed(2)}
+        percentage={${Math.round(Number(respostaBackend.resultado.confianca) * 100)}%}
         result="Desconforto"
         borderColor="#ca420c"
         icon={<DiscomfortIcon size={150} color="#ca420c" />}

@@ -15,7 +15,7 @@ export default function Pain({ route }: any) {
       <BackButton />
       <ResultPage
         time="14:30"
-        percentage={Number(respostaBackend.resultado.confianca)*100.toFixed(2)}
+        percentage={${Math.round(Number(respostaBackend.resultado.confianca) * 100)}%}
         result="Dor"
         borderColor="#8E0305"
         icon={<PainIcon size={160} color="#8E0305" />}
