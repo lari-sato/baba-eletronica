@@ -1,4 +1,3 @@
-import React from "react";
 import Svg, { Path, G, Circle, Mask, Defs } from "react-native-svg";
 
 interface BabyIconsProps {

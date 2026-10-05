@@ -1,11 +1,11 @@
 import {
-  StyleSheet,
   View,
 } from "react-native";
-import { ResultPage } from "../components/resultPage";
-import { SleepyIcon } from "../components/babyIcons";
-import { BackButton } from "../components/backButton";
-import { Nav } from "../components/nav";
+import { ResultPage } from "../../../components/resultPage/resultPage";
+import { SleepyIcon } from "../../../components/babyIcons/babyIcons";
+import { BackButton } from "../../../components/backButton/backButton";
+import { Nav } from "../../../components/nav/nav";
+import { styles } from "./styles";
 
 export default function Sleepy({ route }: any) {
   const { resultadoBackend } = route.params;
@@ -28,14 +28,3 @@ export default function Sleepy({ route }: any) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#E4C9F4",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 20,
-    paddingBottom: 30,
-    paddingTop: 45
-  }
-});

@@ -1,16 +1,16 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Monitor from "../screens/monitor";
-import Sleepy from '../screens/sleepy';
-import Pain from '../screens/pain';
-import Discomfort from '../screens/discomfort';
-import History from '../screens/history';
-import Hungry from '../screens/hungry';
-import Undefined from '../screens/undefined';
-import WifiScreen from "../screens/wifiScreen";
-import Login from "../screens/login";
-import Settings from "../screens/settings";
+import Monitor from "../screens/monitor/monitor/monitor";
+import Sleepy from '../screens/results/sleepy/sleepy';
+import Pain from '../screens/results/pain/pain';
+import Discomfort from '../screens/results/discomfort/discomfort';
+import History from '../screens/history/history/history';
+import Hungry from '../screens/results/hungry/hungry';
+import Undefined from '../screens/results/undefined/undefined';
+import WifiScreen from "../screens/settings/wifi/wifi";
+import Login from "../screens/auth/login/login";
+import Settings from "../screens/settings/settings/settings";
 
 export type RootStackParamList = {
   Login: undefined;

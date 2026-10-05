@@ -1,12 +1,12 @@
 import {
-  StyleSheet,
   View,
 } from "react-native";
 
-import { ResultPage } from "../components/resultPage";
-import { UndefinedIcon } from "../components/babyIcons";
-import { BackButton } from "../components/backButton";
-import { Nav } from "../components/nav";
+import { ResultPage } from "../../../components/resultPage/resultPage";
+import { UndefinedIcon } from "../../../components/babyIcons/babyIcons";
+import { BackButton } from "../../../components/backButton/backButton";
+import { Nav } from "../../../components/nav/nav";
+import { styles } from "./styles";
 
 export default function Undefined({ route }: any) {
   const { resultadoBackend } = route.params;
@@ -30,15 +30,3 @@ export default function Undefined({ route }: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#DADADA",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 20,
-    paddingBottom: 30,
-    paddingTop: 45,
-  },
-});

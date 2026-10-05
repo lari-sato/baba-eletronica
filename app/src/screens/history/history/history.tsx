@@ -1,8 +1,9 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 
-import { BackButton } from "../components/backButton";
-import { Nav } from "../components/nav";
-import { HistoryCard } from "../components/card";
+import { BackButton } from "../../../components/backButton/backButton";
+import { Nav } from "../../../components/nav/nav";
+import { HistoryCard } from "../../../components/historyCard/historyCard";
+import { styles } from "./styles";
 
 import {
   BabyBottle,
@@ -10,7 +11,7 @@ import {
   DiscomfortIcon,
   PainIcon,
   UndefinedIcon,
-} from "../components/babyIcons";
+} from "../../../components/babyIcons/babyIcons";
 
 export default function HistoryScreen() {
   return (
@@ -76,39 +77,3 @@ export default function HistoryScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#C9E4F7",
-    paddingTop: 45,
-    paddingBottom: 20,
-  },
-
-  title: {
-    fontSize: 23,
-    color: "#407888",
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: -30,
-  },
-
-  divider: {
-    height: 2,
-    backgroundColor: "#8FB2CA",
-    width: "88%",
-    alignSelf: "center",
-    marginTop: 4,
-    marginBottom: 15,
-  },
-
-  scroll: {
-    flex: 1,
-    width: "100%",
-  },
-
-  scrollContent: {
-    paddingBottom: 15,
-    alignItems: "center",
-  },
-});
