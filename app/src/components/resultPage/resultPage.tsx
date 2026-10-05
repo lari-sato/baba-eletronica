@@ -13,18 +13,24 @@ interface ResultPageProps {
 }
 
 export function ResultPage({
-  title = "Seu bebê está chorando",
+  title = "Análise concluída:",
   subtitle = "Choro detectado às ",
-  time = "9:41",
+  time = "--:--",
   percentage,
   result,
   borderColor = "#2D2D2D",
   icon,
 }: ResultPageProps) {
+  const mensagemResultado =
+    result === "Indefinido"
+      ? "Não foi possível identificar uma causa predominante:"
+      : `${percentage}% de chance de ser:`;
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
+
         <Text style={styles.subtitle}>
           {subtitle}
           {time}
@@ -34,10 +40,8 @@ export function ResultPage({
       <View style={[styles.circle, { borderColor }]}>{icon}</View>
 
       <View style={styles.card}>
-        <Text style={styles.message}>
-            {result === "Indefinido"
-            ? "O resultado foi:" : `${percentage}% de chance de ser:`}
-  </Text>
+        <Text style={styles.message}>{mensagemResultado}</Text>
+
         <Text style={styles.result}>{result}</Text>
       </View>
     </View>

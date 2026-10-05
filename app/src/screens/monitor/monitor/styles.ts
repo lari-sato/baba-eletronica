@@ -25,13 +25,21 @@ export const styles = StyleSheet.create({
     gap: 20,
   },
 
-  status: {
-    fontSize: 18,
-    color: "#454545",
-    textAlign: "center",
-    fontWeight: "600",
+  mainStatus: {
+  fontSize: 19,
+  color: "#454545",
+  textAlign: "center",
+  fontWeight: "700",
   },
 
+  detailStatus: {
+    fontSize: 14,
+    color: "#696969",
+    textAlign: "center",
+    fontWeight: "500",
+    lineHeight: 20,
+  },
+  
   error: {
     color: "#c92023",
     fontSize: 14,
