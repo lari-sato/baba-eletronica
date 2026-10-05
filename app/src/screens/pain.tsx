@@ -8,22 +8,23 @@ import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
 
 export default function Pain({ route }: any) {
-  const { respostaBackend } = route.params;
+  const { resultadoBackend } = route.params;
+
+  const horario = resultadoBackend?.horario ?? "--:--";
+  const porcentagem = Math.round(Number(resultadoBackend?.confianca ?? 0) * 100);
 
   return (
     <View style={styles.container}>
       <BackButton />
+
       <ResultPage
-        time="14:30"
-        percentage={Math.round(Number(respostaBackend.resultado.confianca) * 100)}
+        time={horario}
+        percentage={porcentagem}
         result="Dor"
         borderColor="#8E0305"
         icon={<PainIcon size={160} color="#8E0305" />}
       />
-      <Nav 
-        onPressHistory={() => console.log("Ir para Histórico")}
-        onPressSettings={() => console.log("Ir para Configurações")}
-      />
+      <Nav />
     </View>
   );
 }

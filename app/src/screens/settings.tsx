@@ -7,6 +7,7 @@ import {
   Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+
 import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
 
@@ -20,40 +21,26 @@ export default function Settings({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-
       <BackButton />
 
       <View style={styles.content}>
-
-        <Text style={styles.title}>
-          Configurações
-        </Text>
+        <Text style={styles.title}>Configurações</Text>
 
         <View style={styles.divider} />
 
         <View style={styles.menuContainer}>
-
           <TouchableOpacity
             style={styles.optionButton}
             onPress={() => navigation.navigate("WifiScreen")}
+            activeOpacity={0.7}
           >
             <View style={styles.optionContent}>
-              <Ionicons
-                name="wifi"
-                size={24}
-                color="#696969"
-              />
+              <Ionicons name="wifi" size={24} color="#696969" />
 
-              <Text style={styles.optionText}>
-                Conectar Wi-Fi
-              </Text>
+              <Text style={styles.optionText}>Conectar Wi-Fi</Text>
             </View>
 
-            <Ionicons
-              name="chevron-forward"
-              size={20}
-              color="#696969"
-            />
+            <Ionicons name="chevron-forward" size={20} color="#696969" />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -62,26 +49,16 @@ export default function Settings({ navigation }: any) {
             activeOpacity={0.7}
           >
             <View style={styles.optionContent}>
-              <Ionicons
-                name="log-out"
-                size={24}
-                color="#c92023"
-              />
+              <Ionicons name="log-out" size={24} color="#c92023" />
 
               <Text style={[styles.optionText, styles.logoutText]}>
                 Sair da conta
               </Text>
             </View>
 
-            <Ionicons
-              name="chevron-forward"
-              size={20}
-              color="#696969"
-            />
+            <Ionicons name="chevron-forward" size={20} color="#696969" />
           </TouchableOpacity>
-
         </View>
-
       </View>
 
       <Modal
@@ -91,23 +68,18 @@ export default function Settings({ navigation }: any) {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-
           <View style={styles.modalContainer}>
-
             <Text style={styles.modalText}>
               Tem certeza que deseja sair da conta?
             </Text>
 
             <View style={styles.buttonContainer}>
-
               <TouchableOpacity
                 style={[styles.actionButton, styles.cancelButton]}
                 onPress={() => setModalVisible(false)}
                 activeOpacity={0.7}
               >
-                <Text style={styles.cancelText}>
-                  Cancelar
-                </Text>
+                <Text style={styles.cancelText}>Cancelar</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -115,24 +87,14 @@ export default function Settings({ navigation }: any) {
                 onPress={handleConfirmLogout}
                 activeOpacity={0.7}
               >
-                <Text style={styles.confirmText}>
-                  Sair
-                </Text>
+                <Text style={styles.confirmText}>Sair</Text>
               </TouchableOpacity>
-
             </View>
-
           </View>
-
         </View>
       </Modal>
 
-      <Nav
-        activeTab="settings"
-        onPressHistory={() => navigation.navigate("History")}
-        onPressSettings={() => console.log("Já está nas configurações")}
-      />
-
+      <Nav activeTab="settings" />
     </View>
   );
 }
@@ -152,24 +114,24 @@ const styles = StyleSheet.create({
   },
 
   title: {
-  fontSize: 23,
-  fontWeight: "bold",
-  color: "#407888",
-  marginBottom: 5,
+    fontSize: 23,
+    fontWeight: "bold",
+    color: "#407888",
+    marginBottom: 5,
   },
 
   divider: {
-  height: 2,
-  backgroundColor: "#8FB2CA",
-  width: "88%",
-  marginBottom: 30,
+    height: 2,
+    backgroundColor: "#8FB2CA",
+    width: "88%",
+    marginBottom: 30,
   },
 
   menuContainer: {
-  width: "100%",
-  gap: 20,
-  alignItems: "center",
-  paddingHorizontal: 20,
+    width: "100%",
+    gap: 20,
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
 
   optionButton: {
@@ -181,7 +143,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-
     elevation: 3,
     shadowColor: "#000",
     shadowOffset: {
@@ -222,7 +183,6 @@ const styles = StyleSheet.create({
     padding: 22,
     alignItems: "center",
     position: "relative",
-
     elevation: 8,
     shadowColor: "#000",
     shadowOffset: {

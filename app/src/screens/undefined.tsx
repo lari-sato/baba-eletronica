@@ -9,22 +9,24 @@ import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
 
 export default function Undefined({ route }: any) {
-  const { respostaBackend } = route.params;
+  const { resultadoBackend } = route.params;
+
+  const horario = resultadoBackend?.horario ?? "--:--";
+  const porcentagem = Math.round(Number(resultadoBackend?.confianca ?? 0) * 100);
 
   return (
     <View style={styles.container}>
       <BackButton />
+
       <ResultPage
-        time="14:30"
-        percentage={Math.round(Number(respostaBackend.resultado.confianca) * 100)}
+        time={horario}
+        percentage={porcentagem}
         result="Indefinido"
         borderColor="#878787"
         icon={<UndefinedIcon size={140} color="#878787" />}
       />
-      <Nav 
-        onPressHistory={() => console.log("Ir para Histórico")}
-        onPressSettings={() => console.log("Ir para Configurações")}
-      />
+
+      <Nav />
     </View>
   );
 }
@@ -37,6 +39,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 20,
     paddingBottom: 30,
-    paddingTop: 45
-  }
+    paddingTop: 45,
+  },
 });

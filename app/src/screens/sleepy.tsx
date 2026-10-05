@@ -7,23 +7,24 @@ import { SleepyIcon } from "../components/babyIcons";
 import { BackButton } from "../components/backButton";
 import { Nav } from "../components/nav";
 
-export default function Sleepy({ route, navigation }: any) {
-  const { respostaBackend } = route.params;
+export default function Sleepy({ route }: any) {
+  const { resultadoBackend } = route.params;
+
+  const horario = resultadoBackend?.horario ?? "--:--";
+  const porcentagem = Math.round(Number(resultadoBackend?.confianca ?? 0) * 100);
 
   return (
     <View style={styles.container}>
       <BackButton />
+
       <ResultPage
-        time="14:30"
-        percentage={Math.round(Number(respostaBackend.resultado.confianca) * 100)}
+        time={horario}
+        percentage={porcentagem}
         result="Sono"
         borderColor="#8D49A4"
         icon={<SleepyIcon size={160} color="#8D49A4" />}
       />
-      <Nav 
-        onPressHistory={() => navigation.navigate("History")}
-        onPressSettings={() => console.log("Ir para Configurações")}
-      />
+      <Nav />
     </View>
   );
 }
