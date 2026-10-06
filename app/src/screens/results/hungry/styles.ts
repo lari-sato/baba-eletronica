@@ -9,5 +9,5 @@ export const styles = StyleSheet.create({
     gap: 20,
     paddingBottom: 30,
     paddingTop: 45,
-  },
+  }
 });

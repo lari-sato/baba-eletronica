@@ -18,9 +18,10 @@ import { styles } from "./styles";
 export default function WifiScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
   const [ssid, setSsid] = useState("");
   const [password, setPassword] = useState("");
+  const [isSsidFocused, setIsSsidFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const handleConnect = async () => {
     if (!ssid.trim() || !password.trim()) {
@@ -81,31 +82,19 @@ export default function WifiScreen() {
 
   return (
     <View style={styles.container}>
-
-      {/* Botão voltar */}
       <BackButton />
 
-      {/* Conteúdo central */}
       <View style={styles.content}>
-
         <View style={styles.header}>
           <Ionicons name="wifi" size={60} color="#407888" />
-
-          <Text style={styles.title}>
-            Conectar Wi-Fi
-          </Text>
-
+          <Text style={styles.title}>Conectar Wi-Fi</Text>
           <Text style={styles.subtitle}>
             Siga os passos abaixo para conectar a babá eletrônica à internet.
           </Text>
         </View>
 
-        {/* Passo 1 */}
         <View style={styles.stepContainer}>
-
-          <Text style={styles.stepTitle}>
-            Passo 1: Conexão temporária
-          </Text>
+          <Text style={styles.stepTitle}>Passo 1: Conexão temporária</Text>
 
           <Text style={styles.stepDescription}>
             Conecte-se à rede do dispositivo para poder enviar os dados.
@@ -115,40 +104,40 @@ export default function WifiScreen() {
             style={styles.settingsButton}
             onPress={abrirConfiguracoesWifi}
           >
-            <Ionicons
-              name="open-outline"
-              size={20}
-              color="#407888"
-            />
+            <Ionicons name="open-outline" size={20} color="#407888" />
 
             <Text style={styles.settingsButtonText}>
               Abrir Configurações de Wi-Fi
             </Text>
           </TouchableOpacity>
-
         </View>
 
-        {/* Passo 2 */}
         <View style={styles.stepContainer}>
-
-          <Text style={styles.stepTitle}>
-            Passo 2: Rede da sua casa
-          </Text>
+          <Text style={styles.stepTitle}>Passo 2: Rede da sua casa</Text>
 
           <Text style={styles.stepDescription}>
             Insira o Wi-Fi que a babá eletrônica irá utilizar.
           </Text>
 
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              isSsidFocused && styles.inputFocused,
+            ]}
             placeholder="Nome da rede"
             placeholderTextColor="#696969"
             value={ssid}
             onChangeText={setSsid}
+            onFocus={() => setIsSsidFocused(true)}
+            onBlur={() => setIsSsidFocused(false)}
           />
 
-          <View style={styles.passwordContainer}>
-
+          <View
+            style={[
+              styles.passwordContainer,
+              isPasswordFocused && styles.inputFocused,
+            ]}
+          >
             <TextInput
               style={styles.passwordInput}
               placeholder="Senha"
@@ -156,6 +145,8 @@ export default function WifiScreen() {
               secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
+              onFocus={() => setIsPasswordFocused(true)}
+              onBlur={() => setIsPasswordFocused(false)}
             />
 
             <TouchableOpacity
@@ -168,29 +159,16 @@ export default function WifiScreen() {
                 color="#696969"
               />
             </TouchableOpacity>
-
           </View>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleConnect}
-          >
-            <Text style={styles.buttonText}>
-              Conectar
-            </Text>
+          <TouchableOpacity style={styles.button} onPress={handleConnect}>
+            <Text style={styles.buttonText}>Conectar</Text>
           </TouchableOpacity>
-
         </View>
-
       </View>
 
-      {/* Navegação inferior */}
-      <Nav
-        onPressHistory={() => console.log("Ir para Histórico")}
-        onPressSettings={() => console.log("Ir para Configurações")}
-      />
+       <Nav activeTab="history" />
 
-      {/* Modal de sucesso */}
       <Modal
         animationType="fade"
         transparent={true}
@@ -198,19 +176,13 @@ export default function WifiScreen() {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-
           <View style={styles.modalContent}>
-
             <TouchableOpacity
               style={styles.closeIconButton}
               onPress={() => setModalVisible(false)}
               activeOpacity={0.6}
             >
-              <Ionicons
-                name="close"
-                size={24}
-                color="#696969"
-              />
+              <Ionicons name="close" size={24} color="#696969" />
             </TouchableOpacity>
 
             <Ionicons
@@ -220,19 +192,14 @@ export default function WifiScreen() {
               style={styles.iconSuccess}
             />
 
-            <Text style={styles.modalTitle}>
-              Conectado!
-            </Text>
+            <Text style={styles.modalTitle}>Conectado!</Text>
 
             <Text style={styles.modalText}>
               Sua rede foi conectada com sucesso.
             </Text>
-
           </View>
-
         </View>
       </Modal>
-
     </View>
   );
 }

@@ -49,7 +49,7 @@ export default function Settings({ navigation }: any) {
             activeOpacity={0.7}
           >
             <View style={styles.optionContent}>
-              <Ionicons name="log-out" size={24} color="#c92023" />
+              <Ionicons name="log-out" size={24} color="#b63b3b" />
 
               <Text style={[styles.optionText, styles.logoutText]}>
                 Sair da conta

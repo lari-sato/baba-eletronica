@@ -1,6 +1,4 @@
-import {
-  View,
-} from "react-native";
+import {View,} from "react-native";
 import { ResultPage } from "../../../components/resultPage/resultPage";
 import { BabyBottle } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton";
@@ -24,7 +22,6 @@ export default function Hungry({ route }: any) {
         borderColor="#E7BC0F"
         icon={<BabyBottle size={120} color="#E7BC0F" />}
       />
-
       <Nav />
     </View>
   );

@@ -1,6 +1,4 @@
-import {
-  View,
-} from "react-native";
+import {View,} from "react-native";
 import { ResultPage } from "../../../components/resultPage/resultPage";
 import { SleepyIcon } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton";

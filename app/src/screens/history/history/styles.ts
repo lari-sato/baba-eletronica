@@ -9,9 +9,9 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 23,
+    fontSize: 25,
     color: "#407888",
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
     textAlign: "center",
     marginTop: -30,
   },
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#8FB2CA",
     width: "88%",
     alignSelf: "center",
-    marginTop: 4,
+    marginTop: 10,
     marginBottom: 15,
   },
 

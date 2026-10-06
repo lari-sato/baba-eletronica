@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import BabyIcon from "../../../components/babyIcons/babyIcons";
 import { styles } from "./styles";
@@ -14,13 +9,18 @@ export default function Login({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isUsernameFocused, setIsUsernameFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   return (
     <View style={styles.container}>
       <BabyIcon size={120} color="#407888" />
 
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          isEmailFocused && styles.inputFocused, 
+        ]}
         placeholder="E-mail"
         placeholderTextColor="#696969"
         keyboardType="email-address"
@@ -28,18 +28,30 @@ export default function Login({ navigation }: any) {
         autoCorrect={false}
         value={email}
         onChangeText={setEmail}
+        onFocus={() => setIsEmailFocused(true)}
+        onBlur={() => setIsEmailFocused(false)}
       />
 
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          isUsernameFocused && styles.inputFocused,
+        ]}
         placeholder="Nome de Usuário"
         placeholderTextColor="#696969"
         autoCapitalize="none"
         value={username}
         onChangeText={setUsername}
+        onFocus={() => setIsUsernameFocused(true)}
+        onBlur={() => setIsUsernameFocused(false)}
       />
 
-      <View style={styles.passwordContainer}>
+      <View
+        style={[
+          styles.passwordContainer,
+          isPasswordFocused && styles.inputFocused, 
+        ]}
+      >
         <TextInput
           style={styles.passwordInput}
           placeholder="Senha"
@@ -47,6 +59,8 @@ export default function Login({ navigation }: any) {
           secureTextEntry={!showPassword}
           value={password}
           onChangeText={setPassword}
+          onFocus={() => setIsPasswordFocused(true)}
+          onBlur={() => setIsPasswordFocused(false)}
         />
 
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -57,13 +71,20 @@ export default function Login({ navigation }: any) {
           />
         </TouchableOpacity>
       </View>
-
-      <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+      
+  
+      <TouchableOpacity 
+        style={styles.forgotPasswordContainer} 
+        activeOpacity={0.7} 
+      >
+        <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Monitor")}
       >
+        
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
     </View>

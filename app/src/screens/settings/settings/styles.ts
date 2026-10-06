@@ -15,8 +15,8 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 23,
-    fontWeight: "bold",
+    fontSize: 25,
+    fontFamily: "Poppins_700Bold",
     color: "#407888",
     marginBottom: 5,
   },
@@ -62,12 +62,13 @@ export const styles = StyleSheet.create({
 
   optionText: {
     fontSize: 16,
-    fontWeight: "600",
-    color: "#333333",
+    fontFamily: "Poppins_700Bold",
+    color: "#696969",
   },
 
   logoutText: {
-    color: "#c92023",
+    color: "#b63b3b",
+    fontFamily: "Poppins_700Bold",
   },
 
   modalOverlay: {
@@ -96,7 +97,7 @@ export const styles = StyleSheet.create({
 
   modalText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
     color: "#2D2D2D",
     marginBottom: 20,
     textAlign: "center",
@@ -121,18 +122,19 @@ export const styles = StyleSheet.create({
   },
 
   confirmButton: {
-    backgroundColor: "#C83737",
+    backgroundColor: "#b63b3b",
+    fontFamily: "Poppins_600SemiBold",
   },
 
   cancelText: {
     color: "#2D2D2D",
-    fontWeight: "600",
-    fontSize: 14,
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 18,
   },
 
   confirmText: {
     color: "#FFFFFF",
-    fontWeight: "600",
-    fontSize: 14,
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 16,
   },
 });

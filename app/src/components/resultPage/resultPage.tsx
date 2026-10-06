@@ -23,7 +23,7 @@ export function ResultPage({
 }: ResultPageProps) {
   const mensagemResultado =
     result === "Indefinido"
-      ? "Não foi possível identificar uma causa predominante:"
+      ? "Não foi possível identificar o choro:"
       : `${percentage}% de chance de ser:`;
 
   return (
@@ -38,10 +38,11 @@ export function ResultPage({
       </View>
 
       <View style={[styles.circle, { borderColor }]}>{icon}</View>
-
+      <Text style={styles.disclaimerText}>
+        Análise feita por IA. Os resultados são estimativas e podem conter imprecisões.
+      </Text>
       <View style={styles.card}>
         <Text style={styles.message}>{mensagemResultado}</Text>
-
         <Text style={styles.result}>{result}</Text>
       </View>
     </View>

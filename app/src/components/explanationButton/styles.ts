@@ -1,17 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffac77",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 20,
-    paddingBottom: 30,
-    paddingTop: 45,
-  },
   infoButton: {
-    backgroundColor: "#ca420c",
     width: "35%",
     height: 70,
     borderRadius: 40,
@@ -20,15 +10,13 @@ export const styles = StyleSheet.create({
     marginTop: -5,
     elevation: 6,
     shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     borderWidth: 3.3,
     borderColor: "#F6F6F6",
-    gap:4,
+    gap: 4,
+
   },
   infoButtonText: {
     fontSize: 17,
@@ -53,10 +41,7 @@ export const styles = StyleSheet.create({
     position: "relative",
     elevation: 5,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
@@ -70,7 +55,7 @@ export const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 24,
     fontFamily: "Poppins_700Bold",
-    color: "#ca420c",
+    marginBottom: 15,
     textAlign: "center",
     paddingHorizontal: 10,
   },
@@ -81,5 +66,5 @@ export const styles = StyleSheet.create({
     lineHeight: 25,
     width: "100%",
     fontFamily: "Poppins_600MediumBold",
-  }
+  },
 });

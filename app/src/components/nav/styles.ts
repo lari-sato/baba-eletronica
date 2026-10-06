@@ -27,9 +27,9 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   navText: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#696969",
     marginTop: 4,
-    fontWeight: "700",
+    fontFamily: "Poppins_600SemiBold",
   },
 });

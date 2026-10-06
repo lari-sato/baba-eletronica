@@ -16,19 +16,21 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   message: {
-    fontSize: 14,
-    color: "#454545",
-    fontWeight: "600",
+    fontSize: 16,
+    color: "#4e4c4c",
+    fontFamily: "Lexend_600SemiBold",
   },
   result: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#666666",
     marginTop: 2,
+    fontFamily: "Lexend_600SemiBold",
   },
   hour: {
-    fontSize: 11,
-    color: "#888888",
+    fontSize: 12,
+    color: "#777777",
     marginTop: 4,
+    fontFamily: "Lexend_500Medium",
   },
   circle: {
     width: 44,

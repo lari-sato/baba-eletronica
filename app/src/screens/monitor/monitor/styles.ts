@@ -11,8 +11,8 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 26,
-    fontWeight: "bold",
+    fontSize: 25,
+    fontFamily: "Poppins_700Bold",
     color: "#407888",
   },
 
@@ -26,23 +26,24 @@ export const styles = StyleSheet.create({
   },
 
   mainStatus: {
-  fontSize: 19,
+  fontSize: 23,
   color: "#454545",
   textAlign: "center",
-  fontWeight: "700",
+  fontFamily: "Poppins_600SemiBold"
   },
 
   detailStatus: {
-    fontSize: 14,
+    fontSize: 17,
     color: "#696969",
     textAlign: "center",
-    fontWeight: "500",
+    fontFamily: "Poppins_500Medium",
     lineHeight: 20,
   },
   
   error: {
     color: "#c92023",
-    fontSize: 14,
+    fontSize: 15,
     textAlign: "center",
+    fontFamily: "Poppins_500Medium",
   },
 });
