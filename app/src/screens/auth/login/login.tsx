@@ -7,10 +7,8 @@ import { styles } from "./styles";
 export default function Login({ navigation }: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isUsernameFocused, setIsUsernameFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   return (
     <View style={styles.container}>
@@ -30,20 +28,6 @@ export default function Login({ navigation }: any) {
         onChangeText={setEmail}
         onFocus={() => setIsEmailFocused(true)}
         onBlur={() => setIsEmailFocused(false)}
-      />
-
-      <TextInput
-        style={[
-          styles.input,
-          isUsernameFocused && styles.inputFocused,
-        ]}
-        placeholder="Nome de Usuário"
-        placeholderTextColor="#696969"
-        autoCapitalize="none"
-        value={username}
-        onChangeText={setUsername}
-        onFocus={() => setIsUsernameFocused(true)}
-        onBlur={() => setIsUsernameFocused(false)}
       />
 
       <View

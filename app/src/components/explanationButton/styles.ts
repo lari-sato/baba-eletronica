@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   infoButton: {
-    width: "35%",
+    width: "33%",
     height: 70,
     borderRadius: 40,
     alignItems: "center",

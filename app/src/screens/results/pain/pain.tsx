@@ -25,7 +25,7 @@ export default function Pain({ route }: any) {
       />
       <ExplanationButton
           title="O que é Dor?"
-          description="O choro classificado como dor pode estar associado a dor no corpo ou cólica."
+          description="O choro classificado como dor pode estar associado a dor física em geral ou cólicas."
           buttonColor="#b8191c"
           titleColor="#bb0a0d"
         />

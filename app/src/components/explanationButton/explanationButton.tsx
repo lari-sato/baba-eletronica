@@ -26,7 +26,7 @@ export function ExplanationButton({
         activeOpacity={0.8}
       >
         <Ionicons name="help-outline" size={32} color="#F6F6F6" />
-        <Text style={styles.infoButtonText}>Explicação</Text>
+        <Text style={styles.infoButtonText}>Entenda</Text>
       </TouchableOpacity>
 
       <Modal
