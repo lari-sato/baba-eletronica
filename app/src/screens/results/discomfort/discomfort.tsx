@@ -4,7 +4,7 @@ import { ResultPage } from "../../../components/resultPage/resultPage";
 import { DiscomfortIcon } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton";
 import { ExplanationButton } from "../../../components/explanationButton/explanationButton";
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
 import { styles } from "./styles";
 
 export default function Discomfort({ route }: any) {
@@ -29,7 +29,7 @@ export default function Discomfort({ route }: any) {
           buttonColor="#ca420c"
           titleColor="#ca420c"
         />
-      <Nav />
+      <Nav activeTab="monitor" />
     </View>
   );
 }

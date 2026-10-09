@@ -4,23 +4,10 @@ export const styles = StyleSheet.create({
   cardContainer: {
     alignItems: "center",
     justifyContent: "center",
-    gap: 20,
+    gap: 16,
     width: "100%",
   },
-  header: {
-    alignItems: "center",
-    gap: 20,
-  },
-  title: {
-    fontSize: 29,
-    color: "#373737",
-    fontFamily: "Poppins_700Bold",
-  },
-  subtitle: {
-    fontSize: 23,
-    color: "#414141",
-    fontFamily: "Poppins_600SemiBold",
-  },
+
   circle: {
     width: 200,
     height: 200,
@@ -30,34 +17,41 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   card: {
-    width: "75%",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    width: "80%",
     backgroundColor: "#F6F6F6",
-    borderRadius: 10,
+    borderRadius: 20,
+    padding: 24,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 18,
   },
+
   message: {
-    fontSize: 23,
-    color: "#454545",
+    fontSize: 20,
+    color: "#696969",
     fontFamily: "Poppins_600SemiBold",
+    textAlign: "center",
   },
+
   result: {
-    fontSize: 30,
+    fontSize: 26,
     color: "#2c2a2c",
-    fontFamily: "Poppins_900Black",
+    fontFamily: "Poppins_700Bold",
     marginTop: 6,
+    textAlign: "center",
   },
+
   disclaimerText: {
     fontSize: 14,
-    color: "#111111",
-    opacity: 0.8,
+    color: "#2D2D2D",
+    opacity: 0.85,
     textAlign: "center",
     paddingHorizontal: 25,
     marginTop: -2,
     marginBottom: -5,
-    fontFamily: "Nunito_700Bold",
+    fontFamily: "Poppins_500Medium",
+    lineHeight: 19,
   },
 });

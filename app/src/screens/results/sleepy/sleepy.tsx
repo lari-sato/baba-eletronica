@@ -2,7 +2,7 @@ import {View,} from "react-native";
 import { ResultPage } from "../../../components/resultPage/resultPage";
 import { SleepyIcon } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton";
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
 import { styles } from "./styles";
 
 export default function Sleepy({ route }: any) {
@@ -22,7 +22,8 @@ export default function Sleepy({ route }: any) {
         borderColor="#8D49A4"
         icon={<SleepyIcon size={160} color="#8D49A4" />}
       />
-      <Nav />
+
+      <Nav activeTab="monitor" />
     </View>
   );
 }

@@ -69,10 +69,11 @@ export const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 40,
   },
   buttonText: {
     color: "#F6F6F6",
     fontSize: 18,
-    fontFamily: "Nunito_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
   },
 });

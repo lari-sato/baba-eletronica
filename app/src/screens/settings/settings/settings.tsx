@@ -8,7 +8,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 import { BackButton } from "../../../components/backButton/backButton";
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
+import { PageHeader } from "../../../components/pageHeader/pageHeader";
 import { styles } from "./styles";
 
 export default function Settings({ navigation }: any) {
@@ -24,9 +25,7 @@ export default function Settings({ navigation }: any) {
       <BackButton />
 
       <View style={styles.content}>
-        <Text style={styles.title}>Configurações</Text>
-
-        <View style={styles.divider} />
+        <PageHeader title="Configurações" />
 
         <View style={styles.menuContainer}>
           <TouchableOpacity

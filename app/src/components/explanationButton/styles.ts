@@ -2,28 +2,29 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   infoButton: {
-    width: "33%",
-    height: 70,
-    borderRadius: 40,
+    width: "30%",
+    height: 54,
+    borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: -5,
-    elevation: 6,
+    marginTop: -4,
+    elevation: 5,
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.18,
     shadowRadius: 4,
-    borderWidth: 3.3,
+    borderWidth: 2.5,
     borderColor: "#F6F6F6",
-    gap: 4,
+    gap: 1,
+  },
 
-  },
   infoButtonText: {
-    fontSize: 17,
+    fontSize: 13,
     color: "#F6F6F6",
-    marginTop: -5,
-    fontFamily: "Nunito_700Bold",
+    marginTop: -4,
+    fontFamily: "Poppins_600SemiBold",
   },
+
   modalOverlay: {
     flex: 1,
     backgroundColor: "#00000080",
@@ -31,6 +32,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
+
   modalContent: {
     width: "85%",
     backgroundColor: "#F6F6F6",
@@ -45,6 +47,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
+
   closeIconButton: {
     position: "absolute",
     top: 12,
@@ -52,19 +55,21 @@ export const styles = StyleSheet.create({
     padding: 5,
     zIndex: 1,
   },
+
   modalTitle: {
-    fontSize: 24,
-    fontFamily: "Poppins_700Bold",
+    fontSize: 22,
+    fontFamily: "Poppins_600SemiBold",
     marginBottom: 15,
     textAlign: "center",
     paddingHorizontal: 10,
   },
+
   modalText: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#696969",
     textAlign: "center",
-    lineHeight: 25,
+    lineHeight: 24,
     width: "100%",
-    fontFamily: "Poppins_600MediumBold",
+    fontFamily: "Poppins_500Medium",
   },
 });

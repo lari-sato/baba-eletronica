@@ -5,27 +5,13 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#C9E4F7",
     paddingTop: 45,
-    paddingBottom: 20,
+    paddingBottom: 0,
   },
 
   content: {
     flex: 1,
     alignItems: "center",
     paddingTop: 35,
-  },
-
-  title: {
-    fontSize: 25,
-    fontFamily: "Poppins_700Bold",
-    color: "#407888",
-    marginBottom: 5,
-  },
-
-  divider: {
-    height: 2,
-    backgroundColor: "#8FB2CA",
-    width: "88%",
-    marginBottom: 30,
   },
 
   menuContainer: {
@@ -123,7 +109,6 @@ export const styles = StyleSheet.create({
 
   confirmButton: {
     backgroundColor: "#b63b3b",
-    fontFamily: "Poppins_600SemiBold",
   },
 
   cancelText: {

@@ -12,7 +12,8 @@ import {
 
 import { Ionicons } from "@expo/vector-icons";
 import { BackButton } from "../../../components/backButton/backButton";
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
+import { PageHeader } from "../../../components/pageHeader/pageHeader";
 import { styles } from "./styles";
 
 export default function WifiScreen() {
@@ -85,13 +86,11 @@ export default function WifiScreen() {
       <BackButton />
 
       <View style={styles.content}>
-        <View style={styles.header}>
-          <Ionicons name="wifi" size={60} color="#407888" />
-          <Text style={styles.title}>Conectar Wi-Fi</Text>
-          <Text style={styles.subtitle}>
-            Siga os passos abaixo para conectar a babá eletrônica à internet.
-          </Text>
-        </View>
+        <PageHeader
+          title="Conectar Wi-Fi"
+          subtitle="Siga os passos abaixo para conectar a babá eletrônica à internet."
+          icon={<Ionicons name="wifi" size={60} color="#407888" />}
+        />
 
         <View style={styles.stepContainer}>
           <Text style={styles.stepTitle}>Passo 1: Conexão temporária</Text>
@@ -167,7 +166,7 @@ export default function WifiScreen() {
         </View>
       </View>
 
-       <Nav activeTab="history" />
+      <Nav activeTab="settings" />
 
       <Modal
         animationType="fade"

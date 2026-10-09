@@ -4,16 +4,22 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#BFDDF3",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 70,
-    paddingBottom: 30,
+    paddingTop: 45,
+    paddingBottom: 0,
   },
 
-  title: {
-    fontSize: 25,
-    fontFamily: "Poppins_700Bold",
-    color: "#407888",
+  content: {
+    flex: 1,
+    alignItems: "center",
+    paddingTop: 35,
+  },
+
+  cardArea: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 30,
   },
 
   card: {
@@ -22,24 +28,25 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 24,
     alignItems: "center",
-    gap: 20,
+    gap: 16,
   },
 
   mainStatus: {
-  fontSize: 23,
-  color: "#454545",
-  textAlign: "center",
-  fontFamily: "Poppins_600SemiBold"
+    fontSize: 20,
+    color: "#454545",
+    textAlign: "center",
+    fontFamily: "Poppins_600SemiBold",
+    lineHeight: 26,
   },
 
   detailStatus: {
-    fontSize: 17,
+    fontSize: 16,
     color: "#696969",
     textAlign: "center",
     fontFamily: "Poppins_500Medium",
-    lineHeight: 20,
+    lineHeight: 22,
   },
-  
+
   error: {
     color: "#c92023",
     fontSize: 15,

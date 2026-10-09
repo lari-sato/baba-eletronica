@@ -7,7 +7,8 @@ import {
 import * as Localization from "expo-localization";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
+import { PageHeader } from "../../../components/pageHeader/pageHeader";
 import { styles } from "./styles";
 
 import {
@@ -152,21 +153,25 @@ export default function Monitor({ navigation }: any) {
     }, [])
   );
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Monitoramento</Text>
+ return (
+  <View style={styles.container}>
+    <View style={styles.content}>
+      <PageHeader title="Monitoramento" />
 
-      <View style={styles.card}>
-        <Text style={styles.mainStatus}>{mensagemPrincipal}</Text>
+      <View style={styles.cardArea}>
+        <View style={styles.card}>
+          <Text style={styles.mainStatus}>{mensagemPrincipal}</Text>
 
-        <Text style={styles.detailStatus}>{mensagemDetalhe}</Text>
+          <Text style={styles.detailStatus}>{mensagemDetalhe}</Text>
 
-        {carregando && <ActivityIndicator size="large" color="#407888" />}
+          {carregando && <ActivityIndicator size="large" color="#407888" />}
 
-        {erro !== "" && <Text style={styles.error}>{erro}</Text>}
+          {erro !== "" && <Text style={styles.error}>{erro}</Text>}
+        </View>
       </View>
-
-      <Nav />
     </View>
+
+  <Nav activeTab="monitor" />
+  </View>
   );
 }

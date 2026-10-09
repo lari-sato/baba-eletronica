@@ -2,7 +2,7 @@ import {View,} from "react-native";
 import { ResultPage } from "../../../components/resultPage/resultPage";
 import { BabyBottle } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton";
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
 import { styles } from "./styles";
 
 export default function Hungry({ route }: any) {
@@ -22,7 +22,8 @@ export default function Hungry({ route }: any) {
         borderColor="#E7BC0F"
         icon={<BabyBottle size={120} color="#E7BC0F" />}
       />
-      <Nav />
+      
+      <Nav activeTab="monitor" />
     </View>
   );
 }

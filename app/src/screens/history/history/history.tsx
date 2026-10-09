@@ -1,8 +1,9 @@
 import { View, Text, ScrollView } from "react-native";
 
 import { BackButton } from "../../../components/backButton/backButton";
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
 import { HistoryCard } from "../../../components/historyCard/historyCard";
+import { PageHeader } from "../../../components/pageHeader/pageHeader";
 import { styles } from "./styles";
 
 import {
@@ -15,12 +16,11 @@ import {
 
 export default function HistoryScreen() {
   return (
-    <View style={styles.container}>
-      <BackButton />
+  <View style={styles.container}>
+    <BackButton />
 
-      <Text style={styles.title}>Histórico</Text>
-
-      <View style={styles.divider} />
+    <View style={styles.content}>
+      <PageHeader title="Histórico" />
 
       <ScrollView
         style={styles.scroll}
@@ -72,8 +72,9 @@ export default function HistoryScreen() {
           iconSize={27}
         />
       </ScrollView>
-
-      <Nav activeTab="history" />
     </View>
-  );
+
+    <Nav activeTab="history" />
+  </View>
+);
 }

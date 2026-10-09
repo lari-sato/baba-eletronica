@@ -1,6 +1,6 @@
 import * as FileSystem from "expo-file-system/legacy";
 
-const ESP32_URL = "http://192.168.68.70"; // Endereço IP da ESP32 na sua rede
+const ESP32_URL = "http://192.168.68.68"; // Endereço IP da ESP32 na sua rede
 const BACKEND_URL = "http://10.0.2.2:8000";  // Endereço IP do backend (emulador ou localhost)
 const ESP32_CONFIG_URL = "http://192.168.4.1";
 

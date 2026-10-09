@@ -4,7 +4,7 @@ import { ResultPage } from "../../../components/resultPage/resultPage";
 import { PainIcon } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton"
 import { ExplanationButton } from "../../../components/explanationButton/explanationButton";
-import { Nav } from "../../../components/nav/nav";
+import { Nav } from "../../../components/navBar/navBar";
 import { styles } from "./styles";
 
 export default function Pain({ route }: any) {  
@@ -29,7 +29,8 @@ export default function Pain({ route }: any) {
           buttonColor="#b8191c"
           titleColor="#bb0a0d"
         />
-      <Nav />
+
+      <Nav activeTab="monitor" />
     </View>
   );
 }
