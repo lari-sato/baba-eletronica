@@ -22,7 +22,7 @@ export function HistoryCard({
   hour,
   IconComponent,
   iconColor = "#2D2D2D",
-  iconSize = 26, 
+  iconSize = 29, 
 }: HistoryCardProps) {
   return (
     <View style={styles.card}>

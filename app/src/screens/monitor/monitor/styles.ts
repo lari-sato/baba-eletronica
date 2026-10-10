@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
   },
 
   detailStatus: {
-    fontSize: 16,
+    fontSize: 17,
     color: "#696969",
     textAlign: "center",
     fontFamily: "Poppins_500Medium",

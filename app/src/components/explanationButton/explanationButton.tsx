@@ -25,8 +25,7 @@ export function ExplanationButton({
         onPress={() => setModalVisible(true)}
         activeOpacity={0.8}
       >
-        <Ionicons name="help-outline" size={32} color="#F6F6F6" />
-        <Text style={styles.infoButtonText}>Entenda</Text>
+        <Text style={styles.infoButtonText}>Saiba Mais</Text>
       </TouchableOpacity>
 
       <Modal

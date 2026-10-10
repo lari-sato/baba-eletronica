@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
   },
 
   modalContainer: {
-    width: "50%",
+    width: "70%",
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
     padding: 22,

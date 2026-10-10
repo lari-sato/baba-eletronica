@@ -55,13 +55,13 @@ export const styles = StyleSheet.create({
   },
 
   input: {
-    width: "100%",
+     width: "100%",
     height: 45,
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 15,
-    fontFamily: "Poppins_600SemiBold",
-    fontSize: 15,
     marginBottom: 10,
     borderWidth: 2,
     borderColor: "transparent",

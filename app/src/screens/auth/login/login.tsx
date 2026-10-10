@@ -19,7 +19,7 @@ export default function Login({ navigation }: any) {
           styles.input,
           isEmailFocused && styles.inputFocused, 
         ]}
-        placeholder="E-mail"
+        placeholder="E-mail/Nome de usuário"
         placeholderTextColor="#696969"
         keyboardType="email-address"
         autoCapitalize="none"
