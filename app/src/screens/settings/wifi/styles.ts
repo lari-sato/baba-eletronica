@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   stepTitle: {
     fontSize: 17,
     fontFamily: "Poppins_700Bold",
-    color: "#407888",
+    color: "#2362a8",
     alignSelf: "flex-start",
     marginBottom: 7,
   },
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   },
 
   settingsButtonText: {
-    color: "#407888",
+    color: "#2362a8",
     fontSize: 15,
     fontFamily: "Poppins_600SemiBold",
   },
@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
   },
 
   inputFocused: {
-    borderColor: "#407888",
+    borderColor: "#2362a8",
   },
 
   passwordInput: {
@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#407888",
+    backgroundColor: "#2362a8",
     width: "80%",
     height: 50,
     borderRadius: 25,
@@ -153,7 +153,7 @@ export const styles = StyleSheet.create({
 
   modalTitle: {
     fontSize: 20,
-    color: "#407888",
+    color: "#2362a8",
     marginBottom: 8,
     fontFamily: "Poppins_600SemiBold",
   },

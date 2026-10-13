@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   },
 
   inputFocused: {
-    borderColor: "#407888",
+    borderColor: "#2362a8",
   },
 
   passwordContainer: {
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#407888",
+    backgroundColor: "#2362a8",
     width: "60%",
     height: 50,
     borderRadius: 25,
@@ -71,9 +71,9 @@ export const styles = StyleSheet.create({
 
 registerText: {
     fontSize: 13,
-    color: "#407888",
+    color: "#2362a8",
     fontFamily: "Poppins_600SemiBold",
     textDecorationLine: "underline",
-    textDecorationColor: "#407888",
+    textDecorationColor: "#2362a8",
   },
 });

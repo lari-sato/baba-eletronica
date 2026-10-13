@@ -12,7 +12,7 @@ interface NavProps {
 export function Nav({ activeTab }: NavProps) {
   const navigation = useNavigation<any>();
 
-  const activeColor = "#407888";
+  const activeColor = "#2362a8";
   const inactiveColor = "#696969";
 
   const monitorColor = activeTab === "monitor" ? activeColor : inactiveColor;

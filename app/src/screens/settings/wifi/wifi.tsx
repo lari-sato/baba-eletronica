@@ -89,7 +89,7 @@ export default function WifiScreen() {
         <PageHeader
           title="Conectar Wi-Fi"
           subtitle="Siga os passos abaixo para conectar a babá eletrônica à internet."
-          icon={<Ionicons name="wifi" size={60} color="#407888" />}
+          icon={<Ionicons name="wifi" size={60} color="#2362a8" />}
         />
 
         <View style={styles.stepContainer}>
@@ -103,7 +103,7 @@ export default function WifiScreen() {
             style={styles.settingsButton}
             onPress={abrirConfiguracoesWifi}
           >
-            <Ionicons name="open-outline" size={20} color="#407888" />
+            <Ionicons name="open-outline" size={20} color="#2362a8" />
 
             <Text style={styles.settingsButtonText}>
               Abrir Configurações de Wi-Fi
@@ -187,7 +187,7 @@ export default function WifiScreen() {
             <Ionicons
               name="checkmark-circle"
               size={35}
-              color="#407888"
+              color="#2362a8"
               style={styles.iconSuccess}
             />
 

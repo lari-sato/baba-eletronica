@@ -164,7 +164,7 @@ export default function Monitor({ navigation }: any) {
 
           <Text style={styles.detailStatus}>{mensagemDetalhe}</Text>
 
-          {carregando && <ActivityIndicator size="large" color="#407888" />}
+          {carregando && <ActivityIndicator size="large" color="#2362a8" />}
 
           {erro !== "" && <Text style={styles.error}>{erro}</Text>}
         </View>

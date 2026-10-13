@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     borderColor: "transparent",
   },
   inputFocused: {
-    borderColor: "#407888",
+    borderColor: "#2362a8",
   },
   passwordInput: {
     flex: 1,
@@ -57,13 +57,13 @@ export const styles = StyleSheet.create({
 
   forgotPasswordText: {
     fontSize: 13,
-    color: "#407888",
+    color: "#2362a8",
     fontFamily: "Poppins_600SemiBold",
     textDecorationLine: "underline",
-    textDecorationColor: "#407888",
+    textDecorationColor: "#2362a8",
   },
   button: {
-    backgroundColor: "#407888",
+    backgroundColor: "#2362a8",
     width: "60%",
     height: 50,
     borderRadius: 25,

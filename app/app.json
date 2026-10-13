@@ -1,6 +1,23 @@
 {
-  "plugins": [
-    "expo-font",
-    "expo-localization"
-  ]
+  "expo": {
+    "name": "Luz e Colo: Babá Eletrônica Assistiva",
+    "slug": "luz-e-colo",
+    "icon": "./src/assets/splash.png",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain"
+    },
+    "plugins": [
+      "expo-font",
+      "expo-localization",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/splash.png",
+          "imageWidth": 220,
+          "resizeMode": "contain"
+        }
+      ]
+    ]
+  }
 }

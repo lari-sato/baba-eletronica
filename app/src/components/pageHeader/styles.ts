@@ -14,14 +14,14 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: "Poppins_700Bold",
-    color: "#407888",
+    color: "#2362a8",
     textAlign: "center",
     marginBottom: 5,
   },
 
   divider: {
     height: 2,
-    backgroundColor: "#8FB2CA",
+    backgroundColor: "#113e7a26",
     width: "88%",
   },
 

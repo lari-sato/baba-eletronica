@@ -21,7 +21,7 @@ export default function Register({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <BabyIcon size={120} color="#407888" />
+      <BabyIcon size={120} color="#2362a8" />
 
     <TextInput
         style={[

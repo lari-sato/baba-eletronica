@@ -55,7 +55,7 @@ export default function HistoryScreen() {
         />
 
         <HistoryCard
-          message="Choro detectado 01/05/2026"
+          message="Choro detectado (01/05/2026)"
           result="90% de chance de ser: Desconforto"
           hour="Às 23:30"
           IconComponent={DiscomfortIcon}
@@ -64,7 +64,7 @@ export default function HistoryScreen() {
         />
 
         <HistoryCard
-          message="Choro detectado 30/04/2026"
+          message="Choro detectado (30/04/2026)"
           result="O resultado foi: Indefinido"
           hour="Às 21:07"
           IconComponent={UndefinedIcon}

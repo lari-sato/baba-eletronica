@@ -35,7 +35,7 @@ export function ResultPage({
       subtitle={`${subtitle}${time}`}
       titleColor="#373737"
       subtitleColor="#414141"
-      dividerColor="#00000026"
+      dividerColor="#113e7a26"
     />
 
     <View style={[styles.circle, { borderColor }]}>{icon}</View>

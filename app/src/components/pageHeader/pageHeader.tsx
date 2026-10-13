@@ -16,9 +16,9 @@ export function PageHeader({
   title,
   subtitle,
   icon,
-  titleColor = "#407888",
+  titleColor = "#2362a8",
   subtitleColor = "#696969",
-  dividerColor = "#8FB2CA",
+  dividerColor = "#113e7a26",
 }: PageHeaderProps) {
   return (
     <View style={styles.container}>

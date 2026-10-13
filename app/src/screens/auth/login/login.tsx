@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, TextInput, TouchableOpacity, Text } from "react-native";
+import { Alert, View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import BabyIcon from "../../../components/babyIcons/babyIcons";
 import { styles } from "./styles";
@@ -10,16 +10,28 @@ export default function Login({ navigation }: any) {
   const [password, setPassword] = useState("");
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
+  const handleLogin = () => {
+    const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailFormat.test(email.trim())) {
+      Alert.alert("E-mail inválido", "Digite um e-mail em formato válido para continuar.");
+      return;
+    }
+
+    navigation.navigate("Monitor");
+  };
+
   return (
     <View style={styles.container}>
-      <BabyIcon size={120} color="#407888" />
+      <BabyIcon size={120} color="#2362a8" />
 
       <TextInput
         style={[
           styles.input,
           isEmailFocused && styles.inputFocused, 
         ]}
-        placeholder="E-mail/Nome de usuário"
+        placeholder="E-mail"
         placeholderTextColor="#696969"
         keyboardType="email-address"
         autoCapitalize="none"
@@ -66,7 +78,7 @@ export default function Login({ navigation }: any) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Monitor")}
+        onPress={handleLogin}
       >
         
         <Text style={styles.buttonText}>Entrar</Text>
