@@ -12,9 +12,11 @@ import WifiScreen from "../screens/settings/wifi/wifi";
 import Login from "../screens/auth/login/login";
 import Settings from "../screens/settings/settings/settings";
 import Opening from "../screens/opening/opening";
+import Register from "../screens/auth/register/register";
 
 export type RootStackParamList = {
   Opening: undefined;
+  Register: undefined;
   Login: undefined;
   Monitor: undefined;
   Hungry: undefined;
@@ -36,6 +38,7 @@ export function Routes() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Opening" component={Opening} />
+      <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Monitor" component={Monitor} />
       <Stack.Screen name="Hungry" component={Hungry} />

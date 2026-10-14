@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { View, TextInput, TouchableOpacity, Text } from "react-native";
+import { Alert, Image, View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import BabyIcon from "../../components/babyIcons/babyIcons";
 import { styles } from "./styles";
 
 export default function Register({ navigation }: any) {
@@ -19,9 +18,35 @@ export default function Register({ navigation }: any) {
   const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] =
     useState(false);
 
+  const handleRegister = () => {
+    const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (
+      !username.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !confirmPassword.trim()
+    ) {
+      Alert.alert("Oops!", "Preencha todos os campos para continuar.");
+      return;
+    }
+
+    if (!emailFormat.test(email.trim())) {
+      Alert.alert("E-mail inválido", "Digite um e-mail em formato válido para continuar.");
+      return;
+    }
+
+    navigation.navigate("Login");
+  };
+
   return (
     <View style={styles.container}>
-      <BabyIcon size={120} color="#2362a8" />
+      <Image
+        source={require("../../../assets/blue-logo.png")}
+        style={styles.logo}
+        resizeMode="contain"
+        accessibilityLabel="Logo Luz e Colo"
+      />
 
     <TextInput
         style={[
@@ -114,7 +139,7 @@ export default function Register({ navigation }: any) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Login")}
+        onPress={handleRegister}
       >
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
@@ -125,7 +150,8 @@ export default function Register({ navigation }: any) {
         onPress={() => navigation.navigate("Login")}
       >
         <Text style={styles.registerText}>
-          Já possui uma conta? Entrar
+          <Text style={styles.registerPrompt}>Já possui uma conta? </Text>
+          <Text style={styles.registerLink}>Entrar</Text>
         </Text>
       </TouchableOpacity>
     </View>

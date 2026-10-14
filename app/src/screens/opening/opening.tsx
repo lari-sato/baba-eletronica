@@ -5,7 +5,7 @@ import { styles } from "./styles";
 export default function Opening({ navigation }: any) {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace("Login");
+      navigation.replace("Register");
     }, 3000);
 
     return () => clearTimeout(timer);

@@ -9,6 +9,13 @@ export const styles = StyleSheet.create({
     gap: 20,
   },
 
+  logo: {
+    width: 180,
+    height: 180,
+    marginBottom: 25,
+    transform: [{ translateY: 0 }],
+  },
+
   input: {
     width: "80%",
     height: 55,
@@ -56,13 +63,13 @@ export const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 5,
+    marginTop: 25,
   },
 
   buttonText: {
     color: "#F6F6F6",
     fontSize: 18,
-    fontFamily: "Nunito_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
   },
 
   registerContainer: {
@@ -73,6 +80,15 @@ registerText: {
     fontSize: 13,
     color: "#2362a8",
     fontFamily: "Poppins_600SemiBold",
+    textDecorationLine: "underline",
+    textDecorationColor: "#2362a8",
+  },
+  registerPrompt: {
+    color: "#696969",
+    textDecorationLine: "none",
+  },
+  registerLink: {
+    color: "#2362a8",
     textDecorationLine: "underline",
     textDecorationColor: "#2362a8",
   },

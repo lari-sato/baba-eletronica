@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Alert, View, TextInput, TouchableOpacity, Text } from "react-native";
+import { Alert, Image, View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import BabyIcon from "../../../components/babyIcons/babyIcons";
 import { styles } from "./styles";
 
 export default function Login({ navigation }: any) {
@@ -14,6 +13,11 @@ export default function Login({ navigation }: any) {
   const handleLogin = () => {
     const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Oops!", "Preencha todos os campos para continuar.");
+      return;
+    }
+
     if (!emailFormat.test(email.trim())) {
       Alert.alert("E-mail inválido", "Digite um e-mail em formato válido para continuar.");
       return;
@@ -24,7 +28,12 @@ export default function Login({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <BabyIcon size={120} color="#2362a8" />
+      <Image
+        source={require("../../../assets/blue-logo.png")}
+        style={styles.logo}
+        resizeMode="contain"
+        accessibilityLabel="Logo Luz e Colo"
+      />
 
       <TextInput
         style={[
@@ -83,6 +92,18 @@ export default function Login({ navigation }: any) {
         
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
+
+      <View style={styles.registerContainer}>
+        <Text style={styles.registerText}>
+          Ainda não tem uma conta?{" "}
+          <Text
+            style={styles.registerLink}
+            onPress={() => navigation.navigate("Register")}
+          >
+            Cadastrar
+          </Text>
+        </Text>
+      </View>
     </View>
   );
 }
