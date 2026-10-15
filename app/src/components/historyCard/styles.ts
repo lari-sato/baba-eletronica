@@ -16,18 +16,18 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   message: {
-    fontSize: 17,
+    fontSize: 15,
     color: "#4e4c4c",
     fontFamily: "Poppins_700Bold",
   },
   result: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#666666",
-    marginTop: 2,
+    marginTop: 1,
     fontFamily: "Poppins_600SemiBold",
   },
   hour: {
-    fontSize: 12,
+    fontSize: 11,
     color: "#777777",
     marginTop: 4,
     fontFamily: "Poppins_600SemiBold",
@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
   circle: {
     width: 48,
     height: 48,
-    borderRadius: 22,
+    borderRadius: 24,
     borderWidth: 3,
     alignItems: "center",
     justifyContent: "center",
