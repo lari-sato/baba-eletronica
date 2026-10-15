@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
     borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: -4,
     elevation: 5,
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 3 },
@@ -15,14 +14,14 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     borderWidth: 2.5,
     borderColor: "#F6F6F6",
-    gap: 1,
   },
 
   infoButtonText: {
-    fontSize: 13,
+    fontSize: 15,
     color: "#F6F6F6",
-    marginTop: -4,
     fontFamily: "Poppins_600SemiBold",
+    textAlign: "center",
+    lineHeight: 16,
   },
 
   modalOverlay: {
@@ -57,7 +56,7 @@ export const styles = StyleSheet.create({
   },
 
   modalTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: "Poppins_600SemiBold",
     marginBottom: 15,
     textAlign: "center",
@@ -65,7 +64,7 @@ export const styles = StyleSheet.create({
   },
 
   modalText: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#696969",
     textAlign: "center",
     lineHeight: 24,

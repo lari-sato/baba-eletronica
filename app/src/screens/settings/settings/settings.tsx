@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { BackButton } from "../../../components/backButton/backButton";
 import { Nav } from "../../../components/navBar/navBar";
 import { PageHeader } from "../../../components/pageHeader/pageHeader";
+import { ConfirmationActions } from "../../../components/confirmationActions/confirmationActions";
 import { styles } from "./styles";
 
 export default function Settings({ navigation }: any) {
@@ -51,7 +52,7 @@ export default function Settings({ navigation }: any) {
               <Ionicons name="log-out" size={24} color="#b63b3b" />
 
               <Text style={[styles.optionText, styles.logoutText]}>
-                Sair da conta
+                Sair
               </Text>
             </View>
 
@@ -72,23 +73,12 @@ export default function Settings({ navigation }: any) {
               Tem certeza que deseja sair da conta?
             </Text>
 
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[styles.actionButton, styles.cancelButton]}
-                onPress={() => setModalVisible(false)}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.cancelText}>Cancelar</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.actionButton, styles.confirmButton]}
-                onPress={handleConfirmLogout}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.confirmText}>Sair</Text>
-              </TouchableOpacity>
-            </View>
+            <ConfirmationActions
+              cancelLabel="Cancelar"
+              confirmLabel="Sair"
+              onCancel={() => setModalVisible(false)}
+              onConfirm={handleConfirmLogout}
+            />
           </View>
         </View>
       </Modal>

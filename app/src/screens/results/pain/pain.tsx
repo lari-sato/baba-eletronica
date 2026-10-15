@@ -24,11 +24,9 @@ export default function Pain({ route }: any) {
         icon={<PainIcon size={160} color="#b8191c" />}
       />
       <ExplanationButton
-          title="O que é Dor?"
-          description="O choro classificado como dor pode estar associado a dor física em geral ou cólicas."
-          buttonColor="#b8191c"
-          titleColor="#bb0a0d"
-        />
+        description="O choro classificado como dor pode estar associado a dor física em geral ou cólicas."
+        buttonColor="#b8191c"
+      />
 
       <Nav activeTab="monitor" />
     </View>

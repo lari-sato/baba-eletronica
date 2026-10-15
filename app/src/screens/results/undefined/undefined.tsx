@@ -26,10 +26,7 @@ export default function Undefined({ route }: any) {
         icon={<UndefinedIcon size={150} color="#878787" />}
       />
       <ExplanationButton
-        title="O que isso significa?"
         description="A causa do choro não pôde ser estimada com confiança. Verifique o bebê e acompanhe os próximos alertas."
-        buttonColor="#878787"
-        titleColor="#353535"
       />
 
       <Nav activeTab="monitor" />

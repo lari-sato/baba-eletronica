@@ -23,32 +23,29 @@ export function ResultPage({
   borderColor = "#2D2D2D",
   icon,
 }: ResultPageProps) {
-  const mensagemResultado =
-    result === "Indefinido"
-      ? "Não foi possível identificar o choro:"
-      : `${percentage}% de chance de ser:`;
+  const mensagemResultado = `${percentage}% de chance de ser:`;
 
   return (
-  <View style={styles.cardContainer}>
-    <PageHeader
-      title={title}
-      subtitle={`${subtitle}${time}`}
-      titleColor="#373737"
-      subtitleColor="#414141"
-      dividerColor="#113e7a26"
-    />
+    <View style={styles.cardContainer}>
+      <PageHeader
+        title={title}
+        subtitle={`${subtitle}${time}`}
+        titleColor="#373737"
+        subtitleColor="#414141"
+        dividerColor="#113e7a26"
+      />
 
-    <View style={[styles.circle, { borderColor }]}>{icon}</View>
+      <View style={[styles.circle, { borderColor }]}>{icon}</View>
 
-    <Text style={styles.disclaimerText}>
-      Análise feita por IA. Os resultados são estimativas e podem conter
-      imprecisões.
-    </Text>
+      <Text style={styles.disclaimerText}>
+        Análise feita por IA. Os resultados são estimativas e podem conter
+        imprecisões.
+      </Text>
 
-    <View style={styles.card}>
-      <Text style={styles.message}>{mensagemResultado}</Text>
-      <Text style={styles.result}>{result}</Text>
+      <View style={styles.card}>
+        <Text style={styles.message}>{mensagemResultado}</Text>
+        <Text style={styles.result}>{result}</Text>
+      </View>
     </View>
-  </View>
   );
 }

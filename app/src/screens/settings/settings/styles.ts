@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
   },
 
   modalContainer: {
-    width: "70%",
+    width: "85%",
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
     padding: 22,
@@ -89,37 +89,4 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  buttonContainer: {
-    flexDirection: "row",
-    gap: 30,
-    width: "80%",
-  },
-
-  actionButton: {
-    flex: 1,
-    height: 42,
-    borderRadius: 21,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  cancelButton: {
-    backgroundColor: "#E0E0E0",
-  },
-
-  confirmButton: {
-    backgroundColor: "#b63b3b",
-  },
-
-  cancelText: {
-    color: "#2D2D2D",
-    fontFamily: "Poppins_600SemiBold",
-    fontSize: 18,
-  },
-
-  confirmText: {
-    color: "#FFFFFF",
-    fontFamily: "Poppins_600SemiBold",
-    fontSize: 16,
-  },
 });

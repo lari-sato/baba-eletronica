@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   cardContainer: {
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    gap: 16,
-    width: "100%",
+    gap: 12,
   },
 
   circle: {
@@ -16,16 +16,30 @@ export const styles = StyleSheet.create({
     borderWidth: 5,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: -8,
+  },
+
+  disclaimerText: {
+    fontSize: 14,
+    color: "#2D2D2D",
+    opacity: 0.85,
+    textAlign: "center",
+    paddingHorizontal: 28,
+    marginTop: -4,
+    marginBottom: 10,
+    fontFamily: "Poppins_500Medium",
+    lineHeight: 19,
   },
 
   card: {
     width: "80%",
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
-    padding: 24,
+    paddingVertical: 24,
+    paddingHorizontal: 24,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 18,
+    marginTop: 20,
   },
 
   message: {
@@ -33,6 +47,7 @@ export const styles = StyleSheet.create({
     color: "#696969",
     fontFamily: "Poppins_600SemiBold",
     textAlign: "center",
+    lineHeight: 26,
   },
 
   result: {
@@ -41,17 +56,6 @@ export const styles = StyleSheet.create({
     fontFamily: "Poppins_700Bold",
     marginTop: 6,
     textAlign: "center",
-  },
-
-  disclaimerText: {
-    fontSize: 14,
-    color: "#2D2D2D",
-    opacity: 0.85,
-    textAlign: "center",
-    paddingHorizontal: 25,
-    marginTop: -2,
-    marginBottom: -5,
-    fontFamily: "Poppins_500Medium",
-    lineHeight: 19,
+    lineHeight: 32,
   },
 });

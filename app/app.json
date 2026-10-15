@@ -4,8 +4,7 @@
     "slug": "luz-e-colo",
     "icon": "./src/assets/splash.png",
     "splash": {
-      "image": "./src/assets/splash.png",
-      "resizeMode": "contain"
+      "image": "./src/assets/splash.png"
     },
     "plugins": [
       "expo-font",

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { TEXTS } from "../../constants/texts";
 import { styles } from "./styles";
 
 interface ExplanationButtonProps {
-  title: string;
+  title?: string;
   description: string;
   buttonColor?: string;
   titleColor?: string;
 }
 
 export function ExplanationButton({
-  title,
+  title = TEXTS.explanationButton.defaultTitle,
   description,
-  buttonColor = "#b8191c",
-  titleColor = "#bb0a0d",
+  buttonColor = "#878787",
+  titleColor = "#353535",
 }: ExplanationButtonProps) {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -25,7 +26,7 @@ export function ExplanationButton({
         onPress={() => setModalVisible(true)}
         activeOpacity={0.8}
       >
-        <Text style={styles.infoButtonText}>Saiba Mais</Text>
+        <Text style={styles.infoButtonText}>{TEXTS.explanationButton.learnMore}</Text>
       </TouchableOpacity>
 
       <Modal
