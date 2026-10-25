@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { ResultPage } from "../../../components/resultPage/resultPage";
 import { PainIcon } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton"
@@ -24,7 +23,7 @@ export default function Pain({ route }: any) {
         icon={<PainIcon size={160} color="#b8191c" />}
       />
       <ExplanationButton
-        description="O choro classificado como dor pode estar associado a dor física em geral ou cólicas."
+        description="O choro classificado como dor pode estar associado a sensações dolorosas, como cólicas ou outros incômodos físicos. Se o choro for intenso, persistente ou acompanhado de outros sintomas, procure orientação médica."
         buttonColor="#b8191c"
       />
 

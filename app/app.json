@@ -16,7 +16,36 @@
           "imageWidth": 220,
           "resizeMode": "contain"
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#2362a8",
+          "defaultChannel": "alertas-choro-v3"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
       ]
-    ]
+    ],
+    "android": {
+      "package": "com.luzecolo.assistiva",
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "android.permission.VIBRATE",
+        "android.permission.POST_NOTIFICATIONS"
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "83c1b12d-84ae-45e8-b2f7-299a023b544b"
+      }
+    },
+    "owner": "julers"
   }
 }

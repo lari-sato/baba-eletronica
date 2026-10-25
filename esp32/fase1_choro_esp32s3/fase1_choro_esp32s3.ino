@@ -9,6 +9,9 @@
 
 #include <WiFi.h>
 #include <WiFiClient.h>
+#include "esp_system.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <Preferences.h>
@@ -74,6 +77,39 @@ bool historicoAudioCompleto = false;
 unsigned long momentoAudioSalvo = 0;
 
 const unsigned long TEMPO_VALIDADE_AUDIO_MS = 60000;
+
+// =========================================================
+// INTEGRACAO AUTOMATICA COM O BACKEND - ETAPA 1
+// =========================================================
+const char* BACKEND_HOST = "192.168.68.73";  // // Use o IP do computador que executa o FastAPI, NAO localhost.
+const uint16_t BACKEND_PORT = 8000;
+const char* CHAVE_BACKEND = "SUA_CHAVE"; // Troque a chave por uma string longa e use o mesmo valor em ESP32_API_KEY no backend.
+const char* CAMINHO_UPLOAD = "/eventos/audio";
+
+// Evita muitos eventos de um mesmo choro. 
+const unsigned long INTERVALO_MIN_EVENTO_MS = 30000;
+const uint8_t MAX_TENTATIVAS_ENVIO = 3;
+const int GANHO_WAV = 16;  
+
+TaskHandle_t tarefaEnvioHandle = nullptr;
+volatile bool envioAudioOcupado = false;
+portMUX_TYPE travaEnvioAudio = portMUX_INITIALIZER_UNLOCKED;
+
+bool uploadEstaOcupado() {
+  portENTER_CRITICAL(&travaEnvioAudio);
+  bool ocupado = envioAudioOcupado;
+  portEXIT_CRITICAL(&travaEnvioAudio);
+  return ocupado;
+}
+
+void definirUploadOcupado(bool ocupado) {
+  portENTER_CRITICAL(&travaEnvioAudio);
+  envioAudioOcupado = ocupado;
+  portEXIT_CRITICAL(&travaEnvioAudio);
+}
+bool jaRegistrouEvento = false;
+unsigned long momentoUltimoEvento = 0;
+String idEventoPendente;
 
 // Limiar para evitar rodar IA no silêncio
 float LIMIAR_ENERGIA = 600;
@@ -350,6 +386,158 @@ bool audioSalvoValido() {
 }
 
 // =========================================================
+// ENVIO AUTOMATICO DO WAV: CORE 0, SEM COPIAR OUTRO BUFFER DE 96 KB
+// =========================================================
+
+void escreverCabecalhoWav(uint8_t* header, uint32_t sampleRate,
+                          uint16_t bitsPerSample, uint16_t channels,
+                          uint32_t dataSize);
+int16_t limitarInt16(int32_t valor);
+
+bool escreverTudo(WiFiClient& cliente, const uint8_t* dados, size_t tamanho) {
+  size_t enviados = 0;
+  unsigned long ultimaAtividade = millis();
+
+  while (enviados < tamanho) {
+    if (!cliente.connected()) return false;
+
+    size_t escritos = cliente.write(dados + enviados, tamanho - enviados);
+    if (escritos > 0) {
+      enviados += escritos;
+      ultimaAtividade = millis();
+    } else {
+      if (millis() - ultimaAtividade > 5000) return false;
+      vTaskDelay(pdMS_TO_TICKS(2));
+    }
+  }
+  return true;
+}
+
+bool enviarAudioSalvoAoBackend(const String& eventoId) {
+  if (WiFi.status() != WL_CONNECTED || !audioDisponivel || audioSalvoBuffer == nullptr) {
+    Serial.println("Upload: Wi-Fi desconectado ou audio indisponivel.");
+    return false;
+  }
+
+  WiFiClient cliente;
+  cliente.setTimeout(10000);
+
+  if (!cliente.connect(BACKEND_HOST, BACKEND_PORT)) {
+    Serial.println("Upload: nao foi possivel conectar ao FastAPI.");
+    return false;
+  }
+
+  const uint32_t bytesAudio = NUM_AMOSTRAS_AUDIO_ENVIO * sizeof(int16_t);
+  const uint32_t totalBytes = 44 + bytesAudio;
+  uint8_t cabecalhoWav[44];
+  escreverCabecalhoWav(cabecalhoWav, SAMPLE_RATE, 16, 1, bytesAudio);
+
+  cliente.print(String("POST ") + CAMINHO_UPLOAD + " HTTP/1.1\r\n");
+  cliente.print(String("Host: ") + BACKEND_HOST + ":" + BACKEND_PORT + "\r\n");
+  cliente.print("Content-Type: audio/wav\r\n");
+  cliente.print(String("Content-Length: ") + totalBytes + "\r\n");
+  cliente.print(String("X-Device-Key: ") + CHAVE_BACKEND + "\r\n");
+  cliente.print(String("X-Event-Id: ") + eventoId + "\r\n");
+  cliente.print("Connection: close\r\n\r\n");
+
+  bool sucesso = escreverTudo(cliente, cabecalhoWav, sizeof(cabecalhoWav));
+
+  // Converte as amostras em blocos, sem montar um segundo WAV completo.
+  const int AMOSTRAS_POR_BLOCO = 256;
+  uint8_t bloco[AMOSTRAS_POR_BLOCO * 2];
+
+  for (int i = 0; i < NUM_AMOSTRAS_AUDIO_ENVIO && sucesso; i += AMOSTRAS_POR_BLOCO) {
+    int quantidade = AMOSTRAS_POR_BLOCO;
+    if (i + quantidade > NUM_AMOSTRAS_AUDIO_ENVIO) {
+      quantidade = NUM_AMOSTRAS_AUDIO_ENVIO - i;
+    }
+
+    for (int j = 0; j < quantidade; j++) {
+      int16_t amostra = limitarInt16((int32_t)audioSalvoBuffer[i + j] * GANHO_WAV);
+      bloco[2 * j] = (uint8_t)(amostra & 0xFF);
+      bloco[2 * j + 1] = (uint8_t)((amostra >> 8) & 0xFF);
+    }
+
+    sucesso = escreverTudo(cliente, bloco, quantidade * 2);
+    vTaskDelay(1);
+  }
+
+  if (!sucesso) {
+    cliente.stop();
+    Serial.println("Upload: conexao interrompida durante envio.");
+    return false;
+  }
+
+  // Aguardar a primeira linha de resposta HTTP.
+  unsigned long inicioEspera = millis();
+  while (!cliente.available() && cliente.connected() && millis() - inicioEspera < 10000) {
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
+
+  if (!cliente.available()) {
+    cliente.stop();
+    Serial.println("Upload: timeout aguardando HTTP do backend.");
+    return false;
+  }
+
+  String linhaStatus = cliente.readStringUntil('\n');
+  linhaStatus.trim();
+  Serial.println("Upload: " + linhaStatus);
+  cliente.stop();
+
+  // 202 = novo evento aceito; 200 = evento ja aceito (retry idempotente).
+  return linhaStatus.startsWith("HTTP/1.1 202") ||
+         linhaStatus.startsWith("HTTP/1.0 202") ||
+         linhaStatus.startsWith("HTTP/1.1 200") ||
+         linhaStatus.startsWith("HTTP/1.0 200");
+}
+
+void tarefaEnvioAudio(void* parametro) {
+  for (;;) {
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+
+    String eventoId = idEventoPendente;
+    bool enviado = false;
+
+    for (uint8_t tentativa = 1; tentativa <= MAX_TENTATIVAS_ENVIO; tentativa++) {
+      Serial.printf("Enviando evento %s (tentativa %u/%u)\n",
+                    eventoId.c_str(), tentativa, MAX_TENTATIVAS_ENVIO);
+      if (enviarAudioSalvoAoBackend(eventoId)) {
+        enviado = true;
+        break;
+      }
+      if (tentativa < MAX_TENTATIVAS_ENVIO) {
+        vTaskDelay(pdMS_TO_TICKS(2500));
+      }
+    }
+
+    if (enviado) {
+      Serial.println("Evento aceito pelo backend. Classificacao ocorrera no FastAPI.");
+    } else {
+      Serial.println("Falha no envio do evento. Sem persistencia em disco; verificar rede.");
+    }
+
+    definirUploadOcupado(false);
+  }
+}
+
+void agendarEnvioDoAudioSalvo() {
+  if (!wifiConfigurado || tarefaEnvioHandle == nullptr || uploadEstaOcupado()) return;
+
+  unsigned long agora = millis();
+  if (jaRegistrouEvento && agora - momentoUltimoEvento < INTERVALO_MIN_EVENTO_MS) return;
+
+  salvarAudioDaDeteccao();
+  if (!audioSalvoValido()) return;
+
+  idEventoPendente = String((uint32_t)esp_random(), HEX) + "-" + String(agora);
+  definirUploadOcupado(true);
+  jaRegistrouEvento = true;
+  momentoUltimoEvento = agora;
+  xTaskNotifyGive(tarefaEnvioHandle);
+}
+
+// =========================================================
 // SERVIDOR WEB
 // =========================================================
 
@@ -417,7 +605,6 @@ void handleAudio() {
   WiFiClient client = server.client();
   client.write(header, 44);
 
-  const int GANHO_WAV = 16;
   const int AMOSTRAS_POR_BLOCO = 256;
   uint8_t bloco[AMOSTRAS_POR_BLOCO * 2];
 
@@ -486,12 +673,12 @@ void handleStatus() {
   json += "\"wifiConfigurado\":" + String(wifiConfigurado ? "true" : "false") + ",";
   json += "\"audioDisponivel\":" + String(audioRecente ? "true" : "false") + ",";
   json += "\"duracaoAudioSegundos\":" + String(DURACAO_AUDIO_ENVIO_SEGUNDOS) + ",";
+  json += "\"envioEmAndamento\":" + String(uploadEstaOcupado() ? "true" : "false") + ",";
   json += "\"idadeAudioMs\":" + String(idadeAudioMs);
   json += "}";
 
   server.send(200, "application/json", json);
 }
-
 
 void handleNotFound() {
   String message = "Arquivo nao encontrado\n\n";
@@ -850,6 +1037,21 @@ void setup() {
 
   server.begin();
 
+  if (wifiConfigurado && audioHistoricoBuffer != nullptr && audioSalvoBuffer != nullptr) {
+    BaseType_t tarefaCriada = xTaskCreatePinnedToCore(
+      tarefaEnvioAudio,
+      "uploadAudio",
+      8192,
+      nullptr,
+      1,
+      &tarefaEnvioHandle,
+      0
+    );
+    if (tarefaCriada != pdPASS) {
+      Serial.println("ERRO: nao foi possivel criar tarefa de upload.");
+    }
+  }
+
   Serial.println("Servidor HTTP iniciado.");
 }
 
@@ -886,7 +1088,7 @@ void loop() {
 
     if (probChoroAtual >= 0.50) {
       som = "bebe chorando";
-      salvarAudioDaDeteccao();
+      agendarEnvioDoAudioSalvo();
       Serial.println("Status: bebe chorando");
     } else {
       som = "ruido ambiental";
@@ -894,5 +1096,5 @@ void loop() {
     }
   }
 
-  delay(500);
+  delay(5);
 }

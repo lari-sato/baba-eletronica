@@ -8,10 +8,14 @@ export const styles = StyleSheet.create({
     paddingBottom: 0,
   },
 
+  backButtonWrapper: {
+    position: "absolute",
+    top: 45,
+    zIndex: 10,
+  },
+
   content: {
     flex: 1,
-    alignItems: "center",
-    paddingTop: 35,
   },
 
   scroll: {

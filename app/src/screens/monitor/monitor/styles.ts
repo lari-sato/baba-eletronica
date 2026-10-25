@@ -5,30 +5,27 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#BFDDF3",
     paddingTop: 45,
-    paddingBottom: 0,
   },
 
   content: {
     flex: 1,
-    alignItems: "center",
-    paddingTop: 35,
   },
 
   cardArea: {
     flex: 1,
-    width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 22,
   },
 
   card: {
-    width: "80%",
+    width: "90%",
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
     padding: 24,
     alignItems: "center",
-    gap: 16,
+    gap: 10,
   },
 
   mainStatus: {
@@ -40,7 +37,7 @@ export const styles = StyleSheet.create({
   },
 
   detailStatus: {
-    fontSize: 17,
+    fontSize: 16,
     color: "#696969",
     textAlign: "center",
     fontFamily: "Poppins_500Medium",
@@ -48,7 +45,7 @@ export const styles = StyleSheet.create({
   },
 
   error: {
-    color: "#c92023",
+    color: "#C92023",
     fontSize: 15,
     textAlign: "center",
     fontFamily: "Poppins_500Medium",

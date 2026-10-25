@@ -9,5 +9,11 @@ export const styles = StyleSheet.create({
     gap: 20,
     paddingBottom: 0,
     paddingTop: 45,
-  }
+  },
+
+  backButtonWrapper: {
+  position: "relative",
+  alignSelf: "flex-start",
+  zIndex: 19,
+  },
 });

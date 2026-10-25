@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Alert, Image, View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "./styles";
+import { salvarSessao } from "../../../services/configuracaoInicial";
 
 export default function Register({ navigation }: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [salvando, setSalvando] = useState(false);
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -18,11 +20,14 @@ export default function Register({ navigation }: any) {
   const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] =
     useState(false);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    if (salvando) return;
+
     const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const nomeTratado = username.trim();
 
     if (
-      !username.trim() ||
+      !nomeTratado ||
       !email.trim() ||
       !password.trim() ||
       !confirmPassword.trim()
@@ -36,7 +41,22 @@ export default function Register({ navigation }: any) {
       return;
     }
 
-    navigation.navigate("Login");
+    if (password !== confirmPassword) {
+      Alert.alert("Senhas diferentes", "A confirmação de senha deve ser igual à senha digitada.");
+      return;
+    }
+
+    // Cadastro local do protótipo: guarda SOMENTE o nome de exibição.
+    // Quando houver autenticação real, salve a sessão após a resposta de sucesso do backend.
+    setSalvando(true);
+    try {
+      await salvarSessao(nomeTratado);
+      navigation.reset({ index: 0, routes: [{ name: "Welcome" }] });
+    } catch {
+      Alert.alert("Erro", "Não foi possível concluir o cadastro neste aparelho.");
+    } finally {
+      setSalvando(false);
+    }
   };
 
   return (
@@ -138,10 +158,11 @@ export default function Register({ navigation }: any) {
       </View>
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, salvando && { opacity: 0.6 }]}
         onPress={handleRegister}
+        disabled={salvando}
       >
-        <Text style={styles.buttonText}>Cadastrar</Text>
+        <Text style={styles.buttonText}>{salvando ? "Salvando..." : "Cadastrar"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

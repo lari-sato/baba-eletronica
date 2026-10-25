@@ -1,3 +1,4 @@
+
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -8,10 +9,15 @@ export const styles = StyleSheet.create({
     paddingBottom: 0,
   },
 
+  backButtonWrapper: {
+    position: "absolute",
+    top: 45,
+    left: 0,
+    zIndex: 10,
+  },
+
   content: {
     flex: 1,
-    alignItems: "center",
-    paddingTop: 35,
   },
 
   menuContainer: {
@@ -19,6 +25,12 @@ export const styles = StyleSheet.create({
     gap: 20,
     alignItems: "center",
     paddingHorizontal: 20,
+  },
+
+  iconContainer: {
+    width: 25,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   optionButton: {
@@ -29,7 +41,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     elevation: 3,
     shadowColor: "#000",
     shadowOffset: {
@@ -43,13 +55,14 @@ export const styles = StyleSheet.create({
   optionContent: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 6,
   },
 
   optionText: {
     fontSize: 16,
     fontFamily: "Poppins_700Bold",
     color: "#696969",
+    includeFontPadding: false,
   },
 
   logoutText: {
@@ -88,5 +101,4 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
-
 });

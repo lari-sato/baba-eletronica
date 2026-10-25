@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   infoButton: {
     width: "30%",
     height: 54,
+    transform: [{ translateY: -36 }],
     borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",

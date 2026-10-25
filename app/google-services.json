@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "625502336894",
+    "project_id": "luz-e-colo",
+    "storage_bucket": "luz-e-colo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625502336894:android:69520794444451296c652f",
+        "android_client_info": {
+          "package_name": "com.luzecolo.assistiva"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIgnhCoY5zXpAuvtqJykt1pIQYoAsBsWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

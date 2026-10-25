@@ -8,15 +8,14 @@ import { styles } from "./styles";
 
 export default function Undefined({ route }: any) {
   const { resultadoBackend } = route.params;
-
   const horario = resultadoBackend?.horario ?? "--:--";
-  const porcentagem = Math.round(
-    Number(resultadoBackend?.confianca ?? 0) * 100,
-  );
+  const porcentagem = Math.round(Number(resultadoBackend?.confianca ?? 0) * 100,);
 
   return (
     <View style={styles.container}>
-      <BackButton />
+      <View style={styles.backButtonWrapper}>
+        <BackButton />
+      </View>
 
       <ResultPage
         time={horario}
@@ -26,7 +25,7 @@ export default function Undefined({ route }: any) {
         icon={<UndefinedIcon size={150} color="#878787" />}
       />
       <ExplanationButton
-        description="A causa do choro não pôde ser estimada com confiança. Verifique o bebê e acompanhe os próximos alertas."
+        description="Nenhuma das possíveis causas analisadas pelo Luz e Colo apresentou porcentagem suficiente para um resultado. Verifique o bebê e acompanhe os próximos alertas."
       />
 
       <Nav activeTab="monitor" />

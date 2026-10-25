@@ -4,7 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Modal,
+  ScrollView,
   Alert,
   Linking,
   Platform,
@@ -14,86 +14,117 @@ import { Ionicons } from "@expo/vector-icons";
 import { BackButton } from "../../../components/backButton/backButton";
 import { Nav } from "../../../components/navBar/navBar";
 import { PageHeader } from "../../../components/pageHeader/pageHeader";
+import { configurarWifiESP32 } from "../../../services/api";
 import { styles } from "./styles";
 
 export default function WifiScreen() {
   const [showPassword, setShowPassword] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [ssid, setSsid] = useState("");
   const [password, setPassword] = useState("");
+  const [conectando, setConectando] = useState(false);
   const [isSsidFocused, setIsSsidFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const handleConnect = async () => {
-    if (!ssid.trim() || !password.trim()) {
-      Alert.alert("Atenção", "Preencha o nome da rede e a senha.");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://192.168.4.1/wifi", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ssid: ssid,
-          password: password,
-        }),
-      });
-
-      if (response.ok) {
-        setModalVisible(true);
-      } else {
-        Alert.alert(
-          "Erro",
-          "Não foi possível salvar as credenciais na babá eletrônica."
-        );
-      }
-    } catch (error) {
-      Alert.alert(
-        "Erro de Conexão",
-        "Certifique-se de que seu celular está conectado na rede 'ESP32-S3-Config' antes de enviar."
-      );
-    }
-  };
-
-  const abrirConfiguracoesWifi = () => {
+  function abrirConfiguracoesWifi() {
     Alert.alert(
       "Passo a Passo",
       "1. Conecte-se na rede Wi-Fi chamada 'ESP32-S3-Config'.\n2. Use a senha 'esp32config'.\n3. Volte para este aplicativo para preencher seus dados.",
       [
-        {
-          text: "Cancelar",
-          style: "cancel",
-        },
+        { text: "Cancelar", style: "cancel" },
         {
           text: "Entendi, ir para Wi-Fi",
           onPress: () => {
-            if (Platform.OS === "ios") {
-              Linking.openURL("App-Prefs:root=WIFI");
+            if (Platform.OS === "android") {
+              Linking.sendIntent(
+                "android.settings.WIFI_SETTINGS"
+              ).catch(() => Linking.openSettings());
             } else {
-              Linking.sendIntent("android.settings.WIFI_SETTINGS");
+              Linking.openSettings();
             }
           },
         },
       ]
     );
-  };
+  }
+
+  async function conectarWifi() {
+    if (conectando) return;
+
+    if (!ssid.trim() || !password.trim()) {
+      Alert.alert(
+        "Atenção",
+        "Preencha o nome da rede e a senha."
+      );
+      return;
+    }
+
+    setConectando(true);
+
+    try {
+      await configurarWifiESP32(ssid.trim(), password);
+
+      setPassword("");
+
+      Alert.alert(
+        "Configuração enviada",
+        "As credenciais foram enviadas à babá eletrônica. Aguarde a conexão com a rede da sua casa."
+      );
+    } catch {
+      Alert.alert(
+        "Não foi possível configurar",
+        "Para configurar uma placa nova, conecte o celular à rede 'ESP32-S3-Config'. Se sua placa já está conectada ao Wi-Fi da casa, não precisa repetir este passo."
+      );
+    } finally {
+      setConectando(false);
+    }
+  }
+
+  function abrirConfiguracoesFlash() {
+    Alert.alert(
+      "Notificações com flash",
+      "Ative a permissão de notificações do Luz e Colo e procure 'Notificações com flash' nas configurações de Acessibilidade ou Notificações do Android. Habilite o flash da câmera.",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Abrir configurações",
+          onPress: () => {
+            if (Platform.OS === "android") {
+              Linking.sendIntent(
+                "android.settings.ACCESSIBILITY_SETTINGS"
+              ).catch(() => Linking.openSettings());
+            } else {
+              Linking.openSettings();
+            }
+          },
+        },
+      ]
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <BackButton />
+      <View style={styles.backButtonWrapper}>
+        <BackButton />
+      </View>
 
-      <View style={styles.content}>
+      <ScrollView
+        style={styles.content}
+        contentContainerStyle={{
+          paddingTop: 30,
+          paddingBottom: 30,
+        }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
         <PageHeader
-          title="Conectar Wi-Fi"
-          subtitle="Siga os passos abaixo para conectar a babá eletrônica à internet."
-          icon={<Ionicons name="wifi" size={60} color="#2362a8" />}
+          title="Tutorial de Uso"
+          subtitle="Realize os passos abaixo para utilizar o Luz e Colo: Babá Eletrônica Assistiva."
         />
 
         <View style={styles.stepContainer}>
-          <Text style={styles.stepTitle}>Passo 1: Conexão temporária</Text>
+          <Text style={styles.stepTitle}>
+            Passo 1: Conexão temporária
+          </Text>
 
           <Text style={styles.stepDescription}>
             Conecte-se à rede do dispositivo para poder enviar os dados.
@@ -103,7 +134,11 @@ export default function WifiScreen() {
             style={styles.settingsButton}
             onPress={abrirConfiguracoesWifi}
           >
-            <Ionicons name="open-outline" size={20} color="#2362a8" />
+            <Ionicons
+              name="open-outline"
+              size={20}
+              color="#2362a8"
+            />
 
             <Text style={styles.settingsButtonText}>
               Abrir Configurações de Wi-Fi
@@ -112,10 +147,17 @@ export default function WifiScreen() {
         </View>
 
         <View style={styles.stepContainer}>
-          <Text style={styles.stepTitle}>Passo 2: Rede da sua casa</Text>
+          <Text style={styles.stepTitle}>
+            Passo 2: Rede da sua casa
+          </Text>
 
           <Text style={styles.stepDescription}>
             Insira o Wi-Fi que a babá eletrônica irá utilizar.
+          </Text>
+
+          <Text style={styles.hint}>
+            Se a babá eletrônica já está conectada ao Wi-Fi da sua casa,
+            não é necessário repetir a configuração.
           </Text>
 
           <TextInput
@@ -129,6 +171,8 @@ export default function WifiScreen() {
             onChangeText={setSsid}
             onFocus={() => setIsSsidFocused(true)}
             onBlur={() => setIsSsidFocused(false)}
+            autoCapitalize="none"
+            autoCorrect={false}
           />
 
           <View
@@ -160,45 +204,48 @@ export default function WifiScreen() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={handleConnect}>
-            <Text style={styles.buttonText}>Conectar</Text>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              conectando && { opacity: 0.6 },
+            ]}
+            onPress={conectarWifi}
+            disabled={conectando}
+          >
+            <Text style={styles.buttonText}>
+              {conectando ? "Conectando..." : "Conectar"}
+            </Text>
           </TouchableOpacity>
         </View>
-      </View>
 
-      <Nav activeTab="settings" />
+        <View style={styles.stepContainer}>
+          <Text style={styles.stepTitle}>
+            Passo 3: Notificações com flash
+          </Text>
 
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity
-              style={styles.closeIconButton}
-              onPress={() => setModalVisible(false)}
-              activeOpacity={0.6}
-            >
-              <Ionicons name="close" size={24} color="#696969" />
-            </TouchableOpacity>
+          <Text style={styles.stepDescription}>
+            Ative as notificações com flash da câmera no Android
+            para receber alertas visuais quando o bebê chorar.
+          </Text>
 
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={abrirConfiguracoesFlash}
+          >
             <Ionicons
-              name="checkmark-circle"
-              size={35}
+              name="open-outline"
+              size={20}
               color="#2362a8"
-              style={styles.iconSuccess}
             />
 
-            <Text style={styles.modalTitle}>Conectado!</Text>
-
-            <Text style={styles.modalText}>
-              Sua rede foi conectada com sucesso.
+            <Text style={styles.settingsButtonText}>
+              Abrir Configurações de Notificações com Flash
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
-      </Modal>
+      </ScrollView>
+
+      <Nav activeTab="settings" />
     </View>
   );
 }

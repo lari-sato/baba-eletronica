@@ -10,6 +10,13 @@ export const styles = StyleSheet.create({
     paddingBottom: 0,
     paddingTop: 45,
   },
+
+  backButtonWrapper: {
+  position: "relative",
+  alignSelf: "flex-start",
+  zIndex: 19,
+  },
+  
   infoButton: {
     backgroundColor: "#ca420c",
     width: "35%",
@@ -30,12 +37,14 @@ export const styles = StyleSheet.create({
     borderColor: "#F6F6F6",
     gap:4,
   },
+
   infoButtonText: {
     fontSize: 17,
     color: "#F6F6F6",
     marginTop: -5,
     fontFamily: "Nunito_700Bold",
   },
+
   modalOverlay: {
     flex: 1,
     backgroundColor: "#00000080",
@@ -43,6 +52,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
+
   modalContent: {
     width: "85%",
     backgroundColor: "#F6F6F6",
@@ -60,6 +70,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
+
   closeIconButton: {
     position: "absolute",
     top: 12,
@@ -67,6 +78,7 @@ export const styles = StyleSheet.create({
     padding: 5,
     zIndex: 1,
   },
+
   modalTitle: {
     fontSize: 24,
     fontFamily: "Poppins_700Bold",
@@ -74,6 +86,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 10,
   },
+
   modalText: {
     fontSize: 18,
     color: "#696969",

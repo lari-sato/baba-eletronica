@@ -69,7 +69,9 @@ const historyItems: HistoryItem[] = [
 export default function HistoryScreen() {
   return (
     <View style={styles.container}>
-      <BackButton />
+      <View style={styles.backButtonWrapper}>
+        <BackButton />
+      </View>
 
       <View style={styles.content}>
         <PageHeader title="Histórico" />

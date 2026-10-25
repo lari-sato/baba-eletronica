@@ -10,4 +10,10 @@ export const styles = StyleSheet.create({
     paddingBottom: 0,
     paddingTop: 45,
   },
+
+  backButtonWrapper: {
+  position: "relative",
+  alignSelf: "flex-start",
+  zIndex: 19,
+  },
 });

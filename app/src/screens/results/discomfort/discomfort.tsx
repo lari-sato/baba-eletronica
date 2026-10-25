@@ -1,5 +1,4 @@
-import { View} from "react-native";
-
+import { View } from "react-native";
 import { ResultPage } from "../../../components/resultPage/resultPage";
 import { DiscomfortIcon } from "../../../components/babyIcons/babyIcons";
 import { BackButton } from "../../../components/backButton/backButton";
@@ -14,7 +13,9 @@ export default function Discomfort({ route }: any) {
 
   return (
     <View style={styles.container}>
-      <BackButton />
+      <View style={styles.backButtonWrapper}>
+        <BackButton />
+      </View>
 
       <ResultPage
         time={horario}
@@ -23,10 +24,12 @@ export default function Discomfort({ route }: any) {
         borderColor="#ca420c"
         icon={<DiscomfortIcon size={150} color="#ca420c" />}
       />
+
       <ExplanationButton
-        description="O choro classificado como desconforto pode estar associado a estímulos físicos ou ambientais que causam incômodo ao bebê, como temperatura inadequada, fralda suja, posição desconfortável, excesso de estímulos ou irritação geral."
+        description="O choro classificado como desconforto pode estar associado a estímulos físicos ou ambientais que causam incômodo ao bebê: temperatura inadequada, fralda suja, posição desconfortável, excesso de estímulos ou irritação geral."
         buttonColor="#ca420c"
       />
+
       <Nav activeTab="monitor" />
     </View>
   );
