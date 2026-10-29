@@ -1,8 +1,8 @@
 import { ScrollView, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { BackButton } from "../../../components/backButton/backButton";
 import { Nav } from "../../../components/navBar/navBar";
 import { PageHeader } from "../../../components/pageHeader/pageHeader";
-import { UndefinedIcon } from "../../../components/babyIcons/babyIcons";
 import { ExplanationButton } from "../../../components/explanationButton/explanationButton";
 import { styles } from "./styles";
 
@@ -44,7 +44,7 @@ export default function PossibleResults({ route }: any) {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.circle}>
-            <UndefinedIcon size={130} color="#878787" />
+            <Ionicons name="remove-circle-outline" size={130} color="#E8A6B8" />
           </View>
 
           <Text style={styles.disclaimer}>
@@ -74,8 +74,8 @@ export default function PossibleResults({ route }: any) {
       </View>
 
       <ExplanationButton
-        description="O choro analisado apresentou características próximas de duas possíveis causas diferentes. Verifique o bebê e acompanhe os próximos alertas."
-        buttonColor="#878787"
+        description="O choro analisado apresentou características próximas de duas causas diferentes. Verifique o bebê e acompanhe os próximos alertas."
+        buttonColor="#E8A6B8"
       />
 
       <Nav activeTab="monitor" />
