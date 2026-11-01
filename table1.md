@@ -1,0 +1,26 @@
+### Quadro 1 — Comparativo entre trabalhos correlatos da literatura recente (2024–2026) e o sistema Luz & Colo
+
+| Trabalho / Autores | Foco & Hardware | Técnicas de IA / Áudio | Acessib. Surdos | Resultados | Lacuna vs. Luz & Colo |
+| :--- | :--- | :--- | :---: | :--- | :--- |
+| **Xia et al. (2024)** | Detecção e causas<br>- *Servidor / GPU* | ResNet18 multitarefa (EMA + CMoE) sobre espectrogramas Mel | Não | F1: 89,1% (detecção)<br>+5,2% F1 nas causas | Modelo pesado para servidor; sem hardware de borda nem retorno assistivo. |
+| **Narayanan et al. (2024)** | Detecção em tempo real<br>- *Servidor / CPU* | LSTM (3 camadas) sobre espectrogramas STFT (janelas de 1 s) | Não | Acurácia: 99,12%<br>Latência: 0,51 ms | Apenas detecção binária (não classifica necessidade); sem interface para PCDs. |
+| **Mohanty et al. (2025)** | Classificação de causas<br>- *Google Colab / GPU* | CNN-BiLSTM híbrida com Atenção + MFCC com deltas ($\Delta$ e $\Delta^2$) | Não | Acurácia: 89,65%<br>F1-score: 88,0% | Restrito a experimentos de laboratório; sem protótipo embarcado nem aplicativo. |
+| **Parvathavarthini et al. (2024)** | Berço IoT inteligente<br>- *Arduino + ESP32-CAM* | Limiar sonoro e CNN facial com app Blynk comercial | Parcial | Funcional em laboratório | Sem IA acústica na borda; depende de app terceiro; alertas convencionais não adaptados. |
+| **Boluk et al. (2026)** | Revisão Sistemática<br>*(51 estudos diádicos)* | Levantamento PRISMA de abordagens acústicas, visuais e fisiológicas | Inexistente | Mapeamento do estado da arte | Evidencia a ausência crítica de tecnologias assistivas voltadas a pais com deficiência auditiva. |
+| **Mohite e Jadhav (2021)** | Sistema de monitoramento infantil | Mecanismos de aviso acessíveis | Sim *(Pais com deficiência auditiva)* | Foco em avisos acessíveis | Foco em avisos sem integração com a classificação completa de áudio na borda/servidor do Luz & Colo. |
+| **Lavner et al. (2016)** | Reconhecimento de choro em ambiente doméstico | Aprendizado profundo *(Deep Learning)* | Não | Investigação do reconhecimento acústico | Abordagem restrita ao reconhecimento sem o fluxo integrado de alerta sensorial para PCDs. |
+| **Hammoud et al. (2024)** | Interpretação de choro infantil | Características MFCC e Random Forest | Não | 96,39% de acurácia *(condições experimentais)* | Avaliação isolada de modelo, sem protótipo embarcado ponta a ponta ou retorno acessível. |
+| **Luz & Colo (2026)** | Babá assistiva ponta a ponta<br>- *ESP32-S3 + MAX9814 + FastAPI + App React Native* | Cascata: TinyML INT8 na borda (26 features leves) + CNNs (MFCC 40x130 + Butterworth) | **Sim (Multimodal)** | Fase 1: 97,55%<br>Fase 2: 67,31%<br>Fase 3: 55,42% | Solução integrada de baixo custo com triagem local em tempo real, diagnóstico em cascata e app sensorial inclusivo. |
+
+---
+
+### Referências Bibliográficas
+
+* **BOLUK, N. et al.** Assistive Technologies for Interaction and Emotion Recognition in Caregiver-Infant Dyads. *IEEE Transactions on Affective Computing*, v. 17, n. 2, p. 1488–1504, 2026. DOI: [10.1109/TAFFC.2026.3665022](https://doi.org/10.1109/TAFFC.2026.3665022).
+* **HAMMOUD, M. et al.** Machine learning-based infant crying interpretation. *Frontiers in Artificial Intelligence*, v. 7, 2024. DOI: [10.3389/frai.2024.1337356](https://doi.org/10.3389/frai.2024.1337356).
+* **LAVNER, Y. et al.** Baby cry detection in domestic environment using deep learning. In: *2016 IEEE International Conference On The Science Of Electrical Engineering (ICSEE)*. Anais... [S.l.]: IEEE, p. 1-5, nov. 2016.
+* **MOHANTY, S. P. et al.** Infant Cry Classification Using CNN-BiLSTM with Attention Mechanism and MFCC Features. In: *2025 International Conference on Artificial Intelligence and Emerging Technologies (ICAIET)*, 2025. p. 1–6. DOI: [10.1109/ICAIET65052.2025.11211316](https://doi.org/10.1109/ICAIET65052.2025.11211316).
+* **MOHITE, A.; JADHAV, D.** Infant Monitoring System for Deaf Parents. *International Journal of Scientific Research in Computer Science, Engineering and Information Technology*, p. 527-534, 2021. DOI: [10.32628/cseit2173163](https://doi.org/10.32628/cseit2173163).
+* **NARAYANAN, S. P.; MANIKANDAN, M. S.; CENKERAMADDI, L. R.** Spectrogram and LSTM Based Infant Cry Detection Method for Infant Wellness Monitoring Systems. In: *2024 16th International Conference on Human System Interaction (HSI)*, 2024. p. 1–6. DOI: [10.1109/HSI61632.2024.10613594](https://doi.org/10.1109/HSI61632.2024.10613594).
+* **PARVATHAVARTHINI, S. et al.** Baby Monitoring Using IoT and Deep Learning. In: *2024 15th International Conference on Computing Communication and Networking Technologies (ICCCNT)*, 2024. p. 1–6. DOI: [10.1109/ICCCNT61001.2024.10725151](https://doi.org/10.1109/ICCCNT61001.2024.10725151).
+* **XIA, M.; HUANG, D.; WANG, W.** Multi-Task Learning for Audio-Based Infant Cry Detection and Reasoning. *IEEE Journal of Biomedical and Health Informatics*, v. 28, n. 12, p. 7434–7444, 2024. DOI: [10.1109/JBHI.2024.3454097](https://doi.org/10.1109/JBHI.2024.3454097).
