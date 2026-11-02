@@ -10,7 +10,7 @@
 | **Mohite e Jadhav (2021)** | Sistema de monitoramento infantil | Mecanismos de aviso acessíveis | Sim *(Pais com deficiência auditiva)* | Foco em avisos acessíveis | Foco em avisos sem integração com a classificação completa de áudio na borda/servidor do Luz & Colo. |
 | **Lavner et al. (2016)** | Reconhecimento de choro em ambiente doméstico | Aprendizado profundo *(Deep Learning)* | Não | Investigação do reconhecimento acústico | Abordagem restrita ao reconhecimento sem o fluxo integrado de alerta sensorial para PCDs. |
 | **Hammoud et al. (2024)** | Interpretação de choro infantil | Características MFCC e Random Forest | Não | 96,39% de acurácia *(condições experimentais)* | Avaliação isolada de modelo, sem protótipo embarcado ponta a ponta ou retorno acessível. |
-| **Luz & Colo (2026)** | Babá assistiva ponta a ponta<br>- *ESP32-S3 + MAX9814 + FastAPI + App React Native* | Cascata: TinyML INT8 na borda (26 features leves) + CNNs (MFCC 40x130 + Butterworth) | **Sim (Multimodal)** | Fase 1: 97,55%<br>Fase 2: 67,31%<br>Fase 3: 55,42% | Solução integrada de baixo custo com triagem local em tempo real, classificação em cascata e app sensorial inclusivo. |
+| **Luz & Colo (2026)** | Babá eletrônica assistiva integrada<br>ESP32-S3 + MAX9814 + FastAPI + aplicativo React Native | Cascata: TinyML INT8 na borda (26 features leves) + CNNs (MFCC 40x130 + Butterworth) | **Sim (multimodal)**<br>Alertas visuais, vibração e flash | **Fase 1 (CNN/MFCC): 98,04%**<br>**Fase 1 (INT8): 80,88%**<br>**Fase 2 (CNN/MFCC): 76,92%**<br>**Fase 3 (CNN/MFCC): 53,85%** | Solução integrada de baixo custo, com detecção embarcada de choro, classificação complementar no servidor e aplicativo acessível com notificações visuais e táteis. |
 
 ---
 
