@@ -1,6 +1,6 @@
 ### Quadro 1 — Comparativo entre trabalhos correlatos da literatura recente (2024–2026) e o sistema Luz & Colo
 
-| Trabalho / Autores | Foco & Hardware | Técnicas de IA / Áudio | Acessib. Surdos | Resultados | Lacuna vs. Luz & Colo |
+| Trabalho / Autores | Foco & Hardware | Técnicas de IA / Áudio | Acessibilidade Surdos | Resultados | Lacuna vs. Luz & Colo |
 | :--- | :--- | :--- | :---: | :--- | :--- |
 | Xia et al. (2024) | Detecção e causas<br>- *Servidor / GPU* | ResNet18 multitarefa (EMA + CMoE) sobre espectrogramas Mel | Não | F1: 89,1% (detecção)<br>+5,2% F1 nas causas | Modelo pesado para servidor; sem hardware de borda nem retorno assistivo. |
 | Narayanan et al. (2024) | Detecção em tempo real<br>- *Servidor / CPU* | LSTM (3 camadas) sobre espectrogramas STFT (janelas de 1 s) | Não | Acurácia: 99,12%<br>Latência: 0,51 ms | Apenas detecção binária (não classifica necessidade); sem interface para PCDs. |
